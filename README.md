@@ -1,2 +1,2 @@
 ## Simple relations diagrams
-https://holberton-school-org.slack.com/archives/D0761EQE4SW/p1738220486003879
+https://drawsql.app/teams/holberton-5/diagrams/shelter
