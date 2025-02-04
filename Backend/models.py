@@ -4,7 +4,7 @@ import datetime
 class User(db.Model):
     __tablename__ = 'users'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
@@ -19,7 +19,7 @@ class User(db.Model):
 class ShelterAccount(db.Model):
     __tablename__ = 'shelter_accounts'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     shelter_id = db.Column(db.BigInteger(), db.ForeignKey('shelters.id'))
@@ -32,7 +32,7 @@ class ShelterAccount(db.Model):
 class Shelter(db.Model):
     __tablename__ = 'shelters'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text())
     location_id = db.Column(db.BigInteger(), db.ForeignKey('locations.id'))
@@ -46,8 +46,7 @@ class Shelter(db.Model):
     shelter_account = db.relationship(
         'ShelterAccount',
         backref='shelter',
-        uselist=False,
-        lazy='dynamic'
+        lazy='joined'
     )
     cats = db.relationship(
         'CatShelter',
@@ -71,7 +70,7 @@ class Shelter(db.Model):
 class Location(db.Model):
     __tablename__ = 'locations'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(255))
     description = db.Column(db.Text())
     info = db.Column(db.Text())
@@ -88,7 +87,7 @@ class Location(db.Model):
 class CatShelter(db.Model):
     __tablename__ = 'cats_shelter'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer())
     breed = db.Column(db.String(255))
@@ -108,7 +107,7 @@ class CatShelter(db.Model):
 class DogShelter(db.Model):
     __tablename__ = 'dogs_shelter'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer())
     breed = db.Column(db.String(255))
@@ -128,7 +127,7 @@ class DogShelter(db.Model):
 class PhotoShelterCat(db.Model):
     __tablename__ = 'photos_shelter_cat'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     animal_id = db.Column(db.BigInteger(), db.ForeignKey('cats_shelter.id'))
     animal_type = db.Column(db.Enum('cat'), default='cat')
     url = db.Column(db.Text())
@@ -139,7 +138,7 @@ class PhotoShelterCat(db.Model):
 class PhotoShelterDog(db.Model):
     __tablename__ = 'photos_shelter_dog'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     animal_id = db.Column(db.BigInteger(), db.ForeignKey('dogs_shelter.id'))
     animal_type = db.Column(db.Enum('dog'), default='dog')
     url = db.Column(db.Text())
@@ -150,7 +149,7 @@ class PhotoShelterDog(db.Model):
 class ShelterPhoto(db.Model):
     __tablename__ = 'shelter_photos'
     
-    id = db.Column(db.BigInteger(), primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     shelter_id = db.Column(db.BigInteger(), db.ForeignKey('shelters.id'))
     url = db.Column(db.Text())
 
