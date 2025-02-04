@@ -1,12 +1,15 @@
 from flask import Flask
 from config import DevConfig
-from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from models import db
+from models import User, Shelter, Location, ShelterAccount, ShelterPhoto, CatShelter, PhotoShelterCat, PhotoShelterDog, DogShelter
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
-db = SQLAlchemy(app)
+db.init_app(app)
+migrate = Migrate(app, db)
 
-from models import *
+
 
 @app.route("/")
 def hello_world():
