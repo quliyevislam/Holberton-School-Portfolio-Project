@@ -6,11 +6,8 @@ from models import User, Shelter, Location, ShelterAccount, ShelterPhoto, CatShe
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
-db.init_app(app)
 migrate = Migrate(app, db)
-
-
-
+db.init_app(app)
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
