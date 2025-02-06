@@ -1,8 +1,15 @@
-class Config(object):
-    pass
-class ProdConfig(Config):
-    pass
-class DevConfig(Config):
-    debug = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+class Config:
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:fuguator1@localhost/paw_rescue'
+    DEBUG = True
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:fuguator1@localhost/paw_rescue'
+    DEBUG = False
+
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig
+}

@@ -1,3 +1,5 @@
 flask
 SQLAlchemy
 flask-migrate
+mysqlclientsudo
+mysql-connector-python
