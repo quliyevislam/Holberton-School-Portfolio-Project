@@ -8,4 +8,4 @@ def home():
 
 @main.route('/about')
 def about():
-    return render_template('about.html')  # Ensure you create this template if needed.
+    return render_template('about.html')
