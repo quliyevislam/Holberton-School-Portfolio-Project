@@ -19,6 +19,8 @@ def create_app(config_name=None):
 
     with app.app_context():
         from . import routes, models
+        # Ensure all models are imported
+        from .models import User, ShelterAccount, Shelter, Location, CatShelter, DogShelter, PhotoShelterCat, PhotoShelterDog, ShelterPhoto
 
     from .routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
