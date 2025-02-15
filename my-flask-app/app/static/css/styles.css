@@ -158,6 +158,16 @@ body {
     background: #333;
 }
 
+footer {
+    background-color: #8BA6F0;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 0.001rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 200px;

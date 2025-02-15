@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, jsonify, redirect, url_for
+from flask import Flask,render_template, Blueprint, request, jsonify, redirect, url_for
 from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_all_locations, get_location_by_id
 import logging
