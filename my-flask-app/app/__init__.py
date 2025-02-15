@@ -23,7 +23,6 @@ def create_app(config_name=None):
 
     @app.errorhandler(404)
     def not_found_error(error):
-        logger.error(f"404 Not Found Error: {error}")
         return render_template('errors/404.html'), 404
 
     @app.errorhandler(500)
@@ -36,5 +35,6 @@ def create_app(config_name=None):
 
     with app.app_context():
         from . import models
+        db.create_all()
 
     return app

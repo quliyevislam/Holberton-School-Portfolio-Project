@@ -3,5 +3,9 @@
 {% block title %}PawRescue - Home{% endblock %}
 
 {% block content %}
-    
+<div class="home-container">
+    <h2>Welcome to PawRescue!</h2>
+    <p>Your one-stop solution for rescuing and adopting animals.</p>
+    <a href="{{ url_for('main.login') }}" class="login-signup-btn">Log In/Sign Up</a>
+</div>
 {% endblock %}

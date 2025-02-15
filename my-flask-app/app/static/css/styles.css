@@ -160,12 +160,34 @@ body {
 
 footer {
     background-color: #8BA6F0;
-    color: rgb(0, 0, 0);
+    color: white;
     text-align: center;
-    padding: 0.001rem;
+    padding: 1rem;
     width: 100%;
     position: absolute;
     bottom: 0;
+}
+
+.home-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.login-signup-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #9B85F6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login-signup-btn:hover {
+    background: #8B75E6;
 }
 
 @media (max-width: 768px) {
