@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Flask App{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>{% block title %}PawRescue{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Flask App</h1>
+    <header class="top-header">
+        <div class="logo">
+            <h1>PawRescue</h1>
+            <span class="paw-icon">🐾</span>
+        </div>
+        <button class="login-btn">Log In/Sign Up</button>
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-    <footer>
-        <p>&copy; 2023 My Flask App</p>
-    </footer>
+
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="{{ url_for('main.report') }}"><i class="fas fa-file-alt"></i>Report Animal</a></li>
+                <li><a href="{{ url_for('main.map') }}"><i class="fas fa-map-marker-alt"></i>Map</a></li>
+                <li><a href="{{ url_for('main.chat') }}"><i class="fas fa-comments"></i>Chat</a></li>
+                <li><a href="{{ url_for('main.community') }}"><i class="fas fa-users"></i>Community</a></li>
+                <li><a href="{{ url_for('main.donate') }}"><i class="fas fa-hand-holding-heart"></i>Donate</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

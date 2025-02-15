@@ -1,7 +1,7 @@
 from ..models import db, Location
 
-def create_location(id, name, description, info):
-    location = Location(id=id, name=name, description=description, info=info)
+def create_new_location(name, description, info):
+    location = Location(name=name, description=description, info=info)
     db.session.add(location)
     db.session.commit()
     return location

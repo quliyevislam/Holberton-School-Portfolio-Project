@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Location Details{% endblock %}
+
+{% block content %}
+<h2>{{ location.name }}</h2>
+<p>{{ location.description }}</p>
+<p>{{ location.info }}</p>
+<a href="{{ url_for('main.location_list') }}">Back to Locations List</a>
+{% endblock %}

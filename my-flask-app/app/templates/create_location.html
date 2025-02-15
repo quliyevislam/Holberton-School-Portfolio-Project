@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Create Location{% endblock %}
+
+{% block content %}
+<h2>Create Location</h2>
+<form action="{{ url_for('main.create_location') }}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    <br>
+    <label for="info">Info:</label>
+    <textarea id="info" name="info" required></textarea>
+    <br>
+    <button type="submit">Save</button>
+</form>
+<a href="{{ url_for('main.location_list') }}"><button>Back to Locations List</button></a>
+{% endblock %}

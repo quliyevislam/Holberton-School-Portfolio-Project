@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from models import db, User, ShelterAccount, Shelter, CatShelter, DogShelter, Location
+from app.models import db, User, ShelterAccount, Shelter, CatShelter, DogShelter, Location
 from .user import *
 from .shelter_account import *
 from .shelter_list import *
