@@ -1,7 +1,8 @@
-from flask import Flask, render_template, Blueprint, request, jsonify, redirect, url_for
+from flask import Flask, render_template, Blueprint, request, jsonify, redirect, url_for, flash
 from app.models import db, User, Shelter
-from app.CRUD.location import create_new_location, get_all_locations, get_location_by_id
+from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
 import logging
+from werkzeug.security import generate_password_hash, check_password_hash
 
 main = Blueprint('main', __name__)
 
@@ -45,17 +46,17 @@ def get_shelters():
     shelters = Shelter.query.all()
     return render_template('shelters_list.html', shelters=shelters)
 
-@main.route('/locations', methods=['GET'])
-def location_list():
-    locations = get_all_locations()
-    return render_template('location_list.html', locations=locations)
+@main.route('/users', methods=['GET'])
+def get_users():
+    users = User.query.all()
+    return render_template('user/users_list.html', users=users)
 
 @main.route('/location/<int:location_id>', methods=['GET'])
 def location(location_id):
     location = get_location_by_id(location_id)
-    return render_template('location.html', location=location)
+    return render_template('location/location.html', location=location)
 
-@main.route('/create_location', methods=['GET', 'POST'])
+@main.route('/location/create_location', methods=['GET', 'POST'])
 def create_location():
     if request.method == 'POST':
         name = request.form['name']
@@ -65,17 +66,33 @@ def create_location():
         return redirect(url_for('main.location_list'))
     return render_template('create_location.html')
 
-@main.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    return render_template('users_list.html', users=users)
+@main.route('/location/update/<int:location_id>', methods=['GET', 'POST'])
+def update_location(location_id):
+    location = get_location_by_id(location_id)
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        info = request.form['info']
+        update_location_by_id(location_id, name, description, info)
+        return redirect(url_for('main.location', location_id=location_id))
+    return render_template('location/update_location.html', location=location)
+
+@main.route('/location/delete/<int:location_id>', methods=['POST'])
+def delete_location(location_id):
+    delete_location_by_id(location_id)
+    return redirect(url_for('main.location_list'))
+
+@main.route('/locations', methods=['GET'])
+def location_list():
+    locations = get_all_locations()
+    return render_template('location/location_list.html', locations=locations)
 
 @main.route('/user/<int:user_id>', methods=['GET'])
 def user(user_id):
-    user = User.query.get(user_id)
-    return render_template('user.html', user=user)
+    user = User.query.get_or_404(user_id)
+    return render_template('user/user.html', user=user)
 
-@main.route('/create_user', methods=['GET', 'POST'])
+@main.route('/user/create_user', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'POST':
         email = request.form['email']
@@ -89,28 +106,56 @@ def create_user():
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
         user = User.query.filter_by(email=email).first()
-        if user and user.password == password:
-            return redirect(url_for('main.home'))
+
+        if user and check_password_hash(user.password, password):
+            flash('Logged in successfully!', 'success')
+            return redirect(url_for('main.user', user_id=user.id))
         else:
-            return render_template('sign_in.html', error="Invalid credentials")
-    return render_template('sign_in.html')
+            flash('Login failed. Check your email and password.', 'danger')
+
+    return render_template('auth/sign_in.html')
 
 @main.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-        if password == confirm_password:
-            user = User(name=name, email=email, password=password)
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for('main.login'))
-        else:
-            return render_template('sign_up.html', error="Passwords do not match")
-    return render_template('sign_up.html')
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+
+        if password != confirm_password:
+            flash('Passwords do not match!', 'danger')
+            return redirect(url_for('main.signup'))
+
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        new_user = User(name=name, email=email, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Account created successfully!', 'success')
+        return redirect(url_for('main.login'))
+
+    return render_template('auth/sign_up.html')
+
+@main.route('/user/update/<int:user_id>', methods=['GET', 'POST'])
+def update_user(user_id):
+    user = User.query.get_or_404(user_id)
+    if request.method == 'POST':
+        user.name = request.form.get('name')
+        user.email = request.form.get('email')
+        db.session.commit()
+        flash('User updated successfully!', 'success')
+        return redirect(url_for('main.user', user_id=user.id))
+    return render_template('user/update_user.html', user=user)
+
+@main.route('/user/delete/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+    flash('User deleted successfully!', 'success')
+    return redirect(url_for('main.get_users'))
 

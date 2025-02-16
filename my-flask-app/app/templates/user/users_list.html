@@ -9,5 +9,4 @@
     <li><a href="{{ url_for('main.user', user_id=user.id) }}">{{ user.name }}</a></li>
     {% endfor %}
 </ul>
-<a href="{{ url_for('main.create_user') }}">Create New User</a>
 {% endblock %}

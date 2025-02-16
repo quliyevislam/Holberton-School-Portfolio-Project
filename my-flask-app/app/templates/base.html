@@ -36,5 +36,18 @@
     {% include 'footer.html' %}
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var forms = document.querySelectorAll('form');
+            forms.forEach(function(form) {
+                if (form.method.toUpperCase() === 'POST') {
+                    var methodInput = form.querySelector('input[name="_method"]');
+                    if (methodInput) {
+                        form.method = methodInput.value;
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

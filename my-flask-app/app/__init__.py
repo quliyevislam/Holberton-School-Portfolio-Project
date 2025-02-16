@@ -30,7 +30,7 @@ def create_app(config_name=None):
         logger.error(f"500 Internal Server Error: {error}")
         return render_template('errors/500.html'), 500
 
-    from .routes import main as main_blueprint
+    from app.routes import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
     with app.app_context():

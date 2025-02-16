@@ -25,8 +25,18 @@ def update_location(id, name, description, info):
     db.session.commit()
     return location
 
-def delete_location(name):
-    location = Location.query.filter_by(name=name).first()
-    db.session.delete(location)
-    db.session.commit()
+def update_location_by_id(id, name, description, info):
+    location = Location.query.filter_by(id=id).first()
+    if location:
+        location.name = name
+        location.description = description
+        location.info = info
+        db.session.commit()
+    return location
+
+def delete_location_by_id(id):
+    location = Location.query.filter_by(id=id).first()
+    if location:
+        db.session.delete(location)
+        db.session.commit()
     return location
