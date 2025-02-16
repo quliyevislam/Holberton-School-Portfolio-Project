@@ -1,6 +1,7 @@
-from flask import Flask, render_template, Blueprint, request, jsonify, redirect, url_for, flash
+from flask import render_template, Blueprint, request, redirect, url_for, flash
 from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
+from app.CRUD.user import create_new_user, get_user_by_id, update_user_by_id, delete_user_by_id, get_all_users
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -46,11 +47,6 @@ def get_shelters():
     shelters = Shelter.query.all()
     return render_template('shelters_list.html', shelters=shelters)
 
-@main.route('/users', methods=['GET'])
-def get_users():
-    users = User.query.all()
-    return render_template('user/users_list.html', users=users)
-
 @main.route('/location/<int:location_id>', methods=['GET'])
 def location(location_id):
     location = get_location_by_id(location_id)
@@ -87,9 +83,14 @@ def location_list():
     locations = get_all_locations()
     return render_template('location/location_list.html', locations=locations)
 
+@main.route('/users', methods=['GET'])
+def get_users():
+    users = get_all_users()
+    return render_template('user/users_list.html', users=users)
+
 @main.route('/user/<int:user_id>', methods=['GET'])
 def user(user_id):
-    user = User.query.get_or_404(user_id)
+    user = get_user_by_id(user_id)
     return render_template('user/user.html', user=user)
 
 @main.route('/user/create_user', methods=['GET', 'POST'])
@@ -97,9 +98,7 @@ def create_user():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        user = User(email=email, password=password)
-        db.session.add(user)
-        db.session.commit()
+        create_new_user(name=request.form['name'], email=email, password=password)
         return redirect(url_for('main.get_users'))
     return render_template('create_user.html')
 
@@ -142,20 +141,15 @@ def signup():
 
 @main.route('/user/update/<int:user_id>', methods=['GET', 'POST'])
 def update_user(user_id):
-    user = User.query.get_or_404(user_id)
+    user = get_user_by_id(user_id)
     if request.method == 'POST':
-        user.name = request.form.get('name')
-        user.email = request.form.get('email')
-        db.session.commit()
+        update_user_by_id(user_id, name=request.form.get('name'), email=request.form.get('email'))
         flash('User updated successfully!', 'success')
         return redirect(url_for('main.user', user_id=user.id))
     return render_template('user/update_user.html', user=user)
 
 @main.route('/user/delete/<int:user_id>', methods=['POST'])
 def delete_user(user_id):
-    user = User.query.get_or_404(user_id)
-    db.session.delete(user)
-    db.session.commit()
+    delete_user_by_id(user_id)
     flash('User deleted successfully!', 'success')
     return redirect(url_for('main.get_users'))
-
