@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Shelter Accounts</h1>
+<a href="{{ url_for('main.create_shelter_account_route') }}" class="btn btn-primary">Create Shelter Account</a>
+<ul>
+    {% for shelter_account in shelter_accounts %}
+        <li>{{ shelter_account.name }} - <a href="{{ url_for('main.shelter_account', shelter_account_id=shelter_account.id) }}">View</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,7 +1,10 @@
 from ..models import db, ShelterAccount
 
-def create_shelter_account(id, name, email, password, shelter_id):
-    shelter_account = ShelterAccount(id=id, name=name, email=email, password=password, shelter_id=shelter_id)
+def create_shelter_account(name, email, password):
+    shelter_account = ShelterAccount()
+    shelter_account.name = name
+    shelter_account.email = email
+    shelter_account.password = password
     db.session.add(shelter_account)
     db.session.commit()
     return shelter_account
@@ -17,11 +20,15 @@ def get_shelter_account_by_id(id):
     shelter_account = ShelterAccount.query.filter_by(id=id).first()
     return shelter_account
 
-def update_shelter_account(id, name, email, password, shelter_id):
+def update_shelter_account(id, name, email, password):
     shelter_account = ShelterAccount.query.filter_by(id=id).first()
     shelter_account.name = name
     shelter_account.email = email
     shelter_account.password = password
-    shelter_account.shelter_id = shelter_id
     db.session.commit()
     return shelter_account
+
+def delete_shelter_account_by_id(id):
+    shelter_account = ShelterAccount.query.filter_by(id=id).first()
+    db.session.delete(shelter_account)
+    db.session.commit()

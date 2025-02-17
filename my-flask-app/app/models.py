@@ -20,11 +20,12 @@ class ShelterAccount(db.Model):
     __tablename__ = 'shelter_accounts'
     
     id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
-    email = db.Column(db.String(255), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    shelter_id = db.Column(db.Integer(), db.ForeignKey('shelters.id'))
-    created_at = db.Column(db.DateTime(), default=datetime.datetime.now)
-    updated_at = db.Column(db.DateTime(), default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    shelter_id = db.Column(db.Integer(), db.ForeignKey('shelters.id'), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
 
     def __repr__(self):
         return "<ShelterAccount '{}'>".format(self.email)
