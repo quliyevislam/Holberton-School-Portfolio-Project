@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, request, redirect, url_for, flash,
 from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
 from app.CRUD.user import create_new_user, get_user_by_id, update_user_by_id, delete_user_by_id, get_all_users
-from app.CRUD.shelter_account import create_shelter_account, get_all_shelter_accounts, get_shelter_account_by_id, update_shelter_account, delete_shelter_account_by_id
+from app.CRUD.shelter_account import create_new_shelter_account, get_all_shelter_accounts, get_shelter_account_by_id, update_shelter_account, delete_shelter_account_by_id
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -159,29 +159,15 @@ def delete_user(user_id):
     flash('User deleted successfully!', 'success')
     return redirect(url_for('main.get_users'))
 
-@main.route('/shelter_accounts', methods=['GET'])
-def get_shelter_accounts():
-    shelter_accounts = get_all_shelter_accounts()
-    return render_template('shelter_account/shelter_list.html', shelter_accounts=shelter_accounts)
+
+
+
+
 
 @main.route('/shelter_account/<int:shelter_account_id>', methods=['GET'])
 def shelter_account(shelter_account_id):
     shelter_account = get_shelter_account_by_id(shelter_account_id)
     return render_template('shelter_account/shelter_account.html', shelter_account=shelter_account)
-
-@main.route('/shelter_account/create', methods=['GET', 'POST'])
-def create_shelter_account_route():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        try:
-            shelter_account = create_shelter_account(name=name, email=email, password=password)
-            flash('Shelter account created successfully!', 'success')
-            return redirect(url_for('main.shelter_account', shelter_account_id=shelter_account.id))
-        except ValueError as e:
-            flash(str(e), 'danger')
-    return render_template('shelter_account/create_shelter_account.html')
 
 @main.route('/shelter_account/update/<int:shelter_account_id>', methods=['GET', 'POST'])
 def update_shelter_account_route(shelter_account_id):
@@ -205,4 +191,18 @@ def delete_shelter_account_route(shelter_account_id):
 def shelter_account_list():
     shelter_accounts = get_all_shelter_accounts()
     return render_template('shelter_account/shelter_account_list.html', shelter_accounts=shelter_accounts)
+
+@main.route('/shelter_account/create', methods=['GET', 'POST'])
+def create_shelter_account():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+        try:
+            shelter_account = create_new_shelter_account(name=name, email=email, password=password)
+            flash('Shelter account created successfully!', 'success')
+            return redirect(url_for('main.shelter_account', shelter_account_id=shelter_account.id))
+        except ValueError as e:
+            flash(str(e), 'danger')
+    return render_template('shelter_account/create_shelter_account.html')
 

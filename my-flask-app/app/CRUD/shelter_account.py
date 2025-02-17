@@ -1,10 +1,7 @@
-from ..models import db, ShelterAccount
+from app.models import db, ShelterAccount
 
-def create_shelter_account(name, email, password):
-    shelter_account = ShelterAccount()
-    shelter_account.name = name
-    shelter_account.email = email
-    shelter_account.password = password
+def create_new_shelter_account(name, email, password):
+    shelter_account = ShelterAccount(name=name, email=email, password=password)
     db.session.add(shelter_account)
     db.session.commit()
     return shelter_account
