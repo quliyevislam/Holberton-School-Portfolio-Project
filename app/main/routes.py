@@ -1,4 +1,5 @@
 from flask import render_template, Blueprint, request, redirect, url_for, flash, Flask
+from app.main import bp as main
 from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
 from app.CRUD.user import create_new_user, get_user_by_id, update_user_by_id, delete_user_by_id, get_all_users

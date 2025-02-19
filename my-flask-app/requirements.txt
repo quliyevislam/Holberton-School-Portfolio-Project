@@ -1,8 +1,0 @@
-Flask
-Flask-SQLAlchemy
-mysqlclient
-Flask-Migrate
-Flask-WTF
-gunicorn
-Werkzeug
-mysql-connector-python
