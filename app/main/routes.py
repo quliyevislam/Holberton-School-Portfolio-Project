@@ -7,8 +7,6 @@ from app.CRUD.shelter_account import create_new_shelter_account, get_all_shelter
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
-main = Blueprint('main', __name__)
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 

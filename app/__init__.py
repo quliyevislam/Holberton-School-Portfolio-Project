@@ -41,3 +41,5 @@ def create_app(config_class=Config):
     app.register_blueprint(errors_blueprint)
 
     return app
+
+from app import models
