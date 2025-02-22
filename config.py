@@ -8,5 +8,5 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY") or "lisan-al-gaib"
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL"
-    ) or "sqlite:///" + os.path.join(basedir, "app.db")
+    ) or f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}/{os.environ.get('DB_NAME')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False

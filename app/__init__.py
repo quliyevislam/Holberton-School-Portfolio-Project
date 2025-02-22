@@ -32,7 +32,6 @@ def create_app(config_class=Config):
         app.logger.setLevel(logging.INFO)
         app.logger.info("Shelter startup")
 
-    
 
     from app.main import bp as main_blueprint
     app.register_blueprint(main_blueprint)
