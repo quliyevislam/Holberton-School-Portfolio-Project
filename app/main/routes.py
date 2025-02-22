@@ -4,6 +4,7 @@ from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
 from app.CRUD.user import create_new_user, get_user_by_id, update_user_by_id, delete_user_by_id, get_all_users
 from app.CRUD.shelter_account import create_new_shelter_account, get_all_shelter_accounts, get_shelter_account_by_id, update_shelter_account, delete_shelter_account_by_id
+from app.CRUD.cat_shelter import create_cat_shelter, get_all_cats, get_cat_by_id, update_cat, delete_cat
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -19,32 +20,27 @@ def about():
 
 @main.route('/contact')
 def contact():
-    return render_template('contact.html')
+    return render_template('features/contact.html')
 
 @main.route('/report_animal')
 def report():
-    return render_template('report.html')
+    return render_template('features/report.html')
 
 @main.route('/map')
 def map():
-    return render_template('map.html')
+    return render_template('features/map.html')
 
 @main.route('/chat')
 def chat():
-    return render_template('chat.html')
+    return render_template('features/chat.html')
 
 @main.route('/community')
 def community():
-    return render_template('community.html')
+    return render_template('features/community.html')
 
 @main.route('/donate')
 def donate():
-    return render_template('donate.html')
-
-# @main.route('/shelters', methods=['GET'])
-# def get_shelters():
-#     shelters = Shelter.query.all()
-#     return render_template('shelters_list.html', shelters=shelters)
+    return render_template('features/donate.html')
 
 @main.route('/location/<int:location_id>', methods=['GET'])
 def location(location_id):
@@ -118,7 +114,7 @@ def login():
         else:
             flash('Login failed. Check your email and password.', 'danger')
 
-    return render_template('auth/sign_in.html')
+    return render_template('auth/login.html')
 
 @main.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -156,11 +152,6 @@ def delete_user(user_id):
     delete_user_by_id(user_id)
     flash('User deleted successfully!', 'success')
     return redirect(url_for('main.get_users'))
-
-
-
-
-
 
 @main.route('/shelter_account/<int:shelter_account_id>', methods=['GET'])
 def shelter_account(shelter_account_id):
@@ -203,4 +194,53 @@ def create_shelter_account():
         except ValueError as e:
             flash(str(e), 'danger')
     return render_template('shelter_account/create_shelter_account.html')
+
+@main.route('/cats', methods=['GET'])
+def cat_list():
+    cats = get_all_cats()
+    return render_template('shelter_cat/shelter_cat_list.html', cats=cats)
+
+@main.route('/cat/<int:cat_id>', methods=['GET'])
+def cat(cat_id):
+    cat = get_cat_by_id(cat_id)
+    return render_template('shelter_cat/shelter_cat.html', cat=cat)
+
+@main.route('/cat/create', methods=['GET', 'POST'])
+def create_cat():
+    if request.method == 'POST':
+        name = request.form['name']
+        age = request.form['age']
+        breed = request.form['breed']
+        description = request.form['description']
+        status = request.form['status']
+        shelter_id = request.form['shelter_id']
+        
+        shelter = Shelter.query.get(shelter_id)
+        if not shelter:
+            flash('Shelter ID does not exist. Please provide a valid Shelter ID.', 'danger')
+            return redirect(url_for('main.create_cat'))
+        
+        create_cat_shelter(id=None, name=name, age=age, breed=breed, description=description, status=status, shelter_id=shelter_id)
+        return redirect(url_for('main.cat_list'))
+    return render_template('shelter_cat/shelter_cat_create.html')
+
+@main.route('/cat/update/<int:cat_id>', methods=['GET', 'POST'])
+def update_cat_route(cat_id):
+    cat = get_cat_by_id(cat_id)
+    if request.method == 'POST':
+        name = request.form['name']
+        age = request.form['age']
+        breed = request.form['breed']
+        description = request.form['description']
+        status = request.form['status']
+        update_cat(id=cat_id, name=name, age=age, breed=breed, description=description, status=status)
+        return redirect(url_for('main.cat', cat_id=cat_id))
+    return render_template('shelter_cat/shelter_cat_update.html', cat=cat)
+
+@main.route('/cat/delete/<int:cat_id>', methods=['POST'])
+def delete_cat_route(cat_id):
+    delete_cat(id=cat_id)
+    return redirect(url_for('main.cat_list'))
+
+
 

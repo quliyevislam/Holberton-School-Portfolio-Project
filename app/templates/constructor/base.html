@@ -13,7 +13,7 @@
             <h1>PawRescue</h1>
             <span class="paw-icon">🐾</span>
         </div>
-        <button class="login-btn">Log In/Sign Up</button>
+        
     </header>
 
     <div class="sidebar">
@@ -33,7 +33,7 @@
         {% block content %}{% endblock %}
     </div>
 
-    {% include 'footer.html' %}
+    {% include 'constructor/footer.html' %}
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>

@@ -1,0 +1,12 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Delete {{ cat.name }}{% endblock %}
+
+{% block content %}
+<h1>Delete {{ cat.name }}</h1>
+<p>Are you sure you want to delete {{ cat.name }}?</p>
+<form action="{{ url_for('main.delete_cat_route', cat_id=cat.id) }}" method="post">
+    <button type="submit">Delete</button>
+</form>
+<a href="{{ url_for('main.cat', cat_id=cat.id) }}">Cancel</a>
+{% endblock %}

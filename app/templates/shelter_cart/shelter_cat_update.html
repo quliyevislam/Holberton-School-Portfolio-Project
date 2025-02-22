@@ -1,0 +1,22 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Update {{ cat.name }}{% endblock %}
+
+{% block content %}
+<h1>Update {{ cat.name }}</h1>
+<form action="{{ url_for('main.update_cat_route', cat_id=cat.id) }}" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ cat.name }}">
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" value="{{ cat.age }}">
+    <label for="breed">Breed:</label>
+    <input type="text" id="breed" name="breed" value="{{ cat.breed }}">
+    <label for="description">Description:</label>
+    <textarea id="description" name="description">{{ cat.description }}</textarea>
+    <label for="status">Status:</label>
+    <input type="text" id="status" name="status" value="{{ cat.status }}">
+    <label for="shelter_id">Shelter ID:</label>
+    <input type="number" id="shelter_id" name="shelter_id" value="{{ cat.shelter_id }}">
+    <button type="submit">Update</button>
+</form>
+{% endblock %}
