@@ -36,8 +36,8 @@ def update_dog(id, name, age, breed, description, status, shelter_id):
     db.session.commit()
     return dog
 
-def delete_dog(name):
-    dog = DogShelter.query.filter_by(name=name).first()
+def delete_dog(id):
+    dog = DogShelter.query.filter_by(id=id).first()
     db.session.delete(dog)
     db.session.commit()
     return dog

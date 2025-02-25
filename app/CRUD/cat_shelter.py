@@ -1,7 +1,7 @@
 from ..models import CatShelter, db
 
 def create_cat_shelter(id, name, age, breed, description, status, shelter_id):
-    cat = CatShelter(id=id, name=name, age=age, breed=breed, description=description, status=status, shelter_id=shelter_id)
+    cat = CatShelter(name=name, age=age, breed=breed, description=description, status=status, shelter_id=shelter_id)
     db.session.add(cat)
     db.session.commit()
     return cat
@@ -36,8 +36,8 @@ def update_cat(id, name, age, breed, description, status, shelter_id):
     db.session.commit()
     return cat
 
-def delete_cat(name):
-    cat = CatShelter.query.filter_by(name=name).first()
+def delete_cat(id):
+    cat = CatShelter.query.filter_by(id=id).first()
     db.session.delete(cat)
     db.session.commit()
     return cat
