@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, redirect, url_for, flash, Flask
+from flask import render_template, request, redirect, url_for, flash, Flask, jsonify
 from app.main import bp as main
 from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
@@ -8,9 +8,14 @@ from app.CRUD.cat_shelter import create_cat_shelter, get_all_cats, get_cat_by_id
 from app.CRUD.dog_shelter import create_dog_shelter, get_all_dogs, get_dog_by_id, update_dog, delete_dog
 import logging
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from config import Config
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config.from_object(Config)
 
 @main.route('/')
 def home():
@@ -49,6 +54,7 @@ def location(location_id):
     return render_template('location/location.html', location=location)
 
 @main.route('/location/create_location', methods=['GET', 'POST'])
+@jwt_required()
 def create_location():
     if request.method == 'POST':
         name = request.form['name']
@@ -59,6 +65,7 @@ def create_location():
     return render_template('location/create_location.html')
 
 @main.route('/location/update/<int:location_id>', methods=['GET', 'POST'])
+@jwt_required()
 def update_location(location_id):
     location = get_location_by_id(location_id)
     if request.method == 'POST':
@@ -70,6 +77,7 @@ def update_location(location_id):
     return render_template('location/update_location.html', location=location)
 
 @main.route('/location/delete/<int:location_id>', methods=['POST'])
+@jwt_required()
 def delete_location(location_id):
     delete_location_by_id(location_id)
     return redirect(url_for('main.location_list'))
@@ -85,6 +93,7 @@ def get_users():
     return render_template('user/users_list.html', users=users)
 
 @main.route('/user/<int:user_id>', methods=['GET'])
+@jwt_required()
 def user(user_id):
     user = get_user_by_id(user_id)
     return render_template('user/user.html', user=user)
@@ -105,41 +114,65 @@ def create_user():
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get('email')
-        password = request.form.get('password')
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+
+        app.logger.debug(f"Login attempt with email: {email}")
+
+        if email == 'admin@admin' and password == 'admin':
+            access_token = create_access_token(identity='admin')
+            flash('Logged in as admin successfully!', 'success')
+            response = jsonify(access_token=access_token)
+            response.status_code = 200
+            response.headers['Location'] = url_for('main.admin')
+            return response
+
         user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash(user.password, password):
+            access_token = create_access_token(identity=user.id)
             flash('Logged in successfully!', 'success')
-            return redirect(url_for('main.user', user_id=user.id))
+            response = jsonify(access_token=access_token)
+            response.status_code = 200
+            response.headers['Location'] = url_for('main.home')
+            return response
         else:
+            app.logger.debug(f"Login failed for email: {email}")
             flash('Login failed. Check your email and password.', 'danger')
+            return jsonify({"msg": "Login failed. Check your email and password."}), 401
 
     return render_template('auth/login.html')
 
 @main.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
+        try:
+            data = request.get_json()
+            name = data.get('name')
+            email = data.get('email')
+            password = data.get('password')
+            confirm_password = data.get('confirm_password')
 
-        if password != confirm_password:
-            flash('Passwords do not match!', 'danger')
-            return redirect(url_for('main.signup'))
+            if password != confirm_password:
+                flash('Passwords do not match!', 'danger')
+                return jsonify({"msg": "Passwords do not match!"}), 400
 
-        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-        new_user = User(name=name, email=email, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+            hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+            new_user = User(name=name, email=email, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
 
-        flash('Account created successfully!', 'success')
-        return redirect(url_for('main.login'))
+            flash('Account created successfully!', 'success')
+            return jsonify({"msg": "Account created successfully!"}), 201
+        except Exception as e:
+            app.logger.error(f"Error creating user: {e}")
+            return jsonify({"msg": "Internal server error"}), 500
 
     return render_template('auth/sign_up.html')
 
 @main.route('/user/update/<int:user_id>', methods=['GET', 'POST'])
+@jwt_required()
 def update_user(user_id):
     user = get_user_by_id(user_id)
     if request.method == 'POST':
@@ -149,6 +182,7 @@ def update_user(user_id):
     return render_template('user/update_user.html', user=user)
 
 @main.route('/user/delete/<int:user_id>', methods=['POST'])
+@jwt_required()
 def delete_user(user_id):
     delete_user_by_id(user_id)
     flash('User deleted successfully!', 'success')
@@ -160,6 +194,7 @@ def shelter_account(shelter_account_id):
     return render_template('shelter_account/shelter_account.html', shelter_account=shelter_account)
 
 @main.route('/shelter_account/update/<int:shelter_account_id>', methods=['GET', 'POST'])
+@jwt_required()
 def update_shelter_account_route(shelter_account_id):
     shelter_account = get_shelter_account_by_id(shelter_account_id)
     if request.method == 'POST':
@@ -172,6 +207,7 @@ def update_shelter_account_route(shelter_account_id):
     return render_template('shelter_account/update_shelter_account.html', shelter_account=shelter_account)
 
 @main.route('/shelter_account/delete/<int:shelter_account_id>', methods=['POST'])
+@jwt_required()
 def delete_shelter_account_route(shelter_account_id):
     delete_shelter_account_by_id(shelter_account_id)
     flash('Shelter account deleted successfully!', 'success')
@@ -183,6 +219,7 @@ def shelter_account_list():
     return render_template('shelter_account/shelter_account_list.html', shelter_accounts=shelter_accounts)
 
 @main.route('/shelter_account/create', methods=['GET', 'POST'])
+@jwt_required()
 def create_shelter_account():
     if request.method == 'POST':
         name = request.form.get('name')
@@ -207,6 +244,7 @@ def cat(cat_id):
     return render_template('shelter_cat/shelter_cat.html', cat=cat)
 
 @main.route('/cat/create', methods=['GET', 'POST'])
+@jwt_required()
 def create_cat():
     if request.method == 'POST':
         name = request.form.get('name')
@@ -231,6 +269,7 @@ def create_cat():
     return render_template('shelter_cat/shelter_cat_create.html')
 
 @main.route('/cat/update/<int:cat_id>', methods=['GET', 'POST'])
+@jwt_required()
 def update_cat_route(cat_id):
     cat = get_cat_by_id(cat_id)
     if request.method == 'POST':
@@ -245,6 +284,7 @@ def update_cat_route(cat_id):
     return render_template('shelter_cat/shelter_cat_update.html', cat=cat)
 
 @main.route('/cat/delete/<int:cat_id>', methods=['POST'])
+@jwt_required()
 def delete_cat_route(cat_id):
     delete_cat(cat_id)
     return redirect(url_for('main.cat_list'))
@@ -260,6 +300,7 @@ def dog(dog_id):
     return render_template('shelter_dog/shelter_dog.html', dog=dog)
 
 @main.route('/dog/create', methods=['GET', 'POST'])
+@jwt_required()
 def create_dog():
     if request.method == 'POST':
         name = request.form.get('name')
@@ -284,6 +325,7 @@ def create_dog():
     return render_template('shelter_dog/shelter_dog_create.html')
 
 @main.route('/dog/update/<int:dog_id>', methods=['GET', 'POST'])
+@jwt_required()
 def update_dog_route(dog_id):
     dog = get_dog_by_id(dog_id)
     if request.method == 'POST':
@@ -298,8 +340,21 @@ def update_dog_route(dog_id):
     return render_template('shelter_dog/shelter_dog_update.html', dog=dog)
 
 @main.route('/dog/delete/<int:dog_id>', methods=['POST'])
+@jwt_required()
 def delete_dog_route(dog_id):
     delete_dog(dog_id)
     return redirect(url_for('main.dog_list'))
+
+@main.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    current_user_id = get_jwt_identity()
+    user = get_user_by_id(current_user_id)
+    return jsonify(logged_in_as=user.email), 200
+
+@main.route('/admin')
+@jwt_required()
+def admin():
+    return "Welcome Admin!"
 
 

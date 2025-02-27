@@ -1,0 +1,13 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Admin - PawRescue{% endblock %}
+
+{% block content %}
+<h1>Admin Dashboard</h1>
+<p>Welcome to the admin dashboard. Here you can manage users, shelters, and more.</p>
+
+<div class="admin-actions">
+    <a href="{{ url_for('admin.users') }}">Manage Users</a>
+    <a href="{{ url_for('admin.shelters') }}">Manage Shelters</a>
+</div>
+{% endblock %}
