@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawRescue - Profile</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <header>
+        <h1>PawRescue - Profile</h1>
+        <button class="home-btn" onclick="redirectToHome()">Home</button>
+    </header>
+
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <p><strong>Name:</strong> <span id="userName">John Doe</span></p>
+        <p><strong>Email:</strong> <span id="userEmail">john.doe@example.com</span></p>
+    </div>
+
+    <div class="animal-container">
+        <h2>Reported Animals</h2>
+        <div id="animalList">
+            <!-- Heyvan məlumatları buraya əlavə olunacaq -->
+        </div>
+    </div>
+
+    <script>
+       
+            function loadUserData() {
+                document.getElementById("userName").innerText = localStorage.getItem("userName") || "Guest";
+                document.getElementById("userEmail").innerText = localStorage.getItem("userEmail") || "Not Provided";
+            }
+        
+            function loadAnimalData() {
+                const animalList = document.getElementById("animalList");
+                const animalType = localStorage.getItem("animalType");
+                const condition = localStorage.getItem("condition");
+                const location = localStorage.getItem("location");
+                const description = localStorage.getItem("description");
+                const animalPhoto = localStorage.getItem("animalPhoto");
+        
+                if (animalType && condition && location) {
+                    let photoHTML = "";
+                    if (animalPhoto) {
+                        photoHTML = `<img src="${animalPhoto}" alt="Animal Photo" style="width: 180px; height: 240px; object-fit: cover; border-radius: 10px;">`;
+                    }
+        
+                    animalList.innerHTML = `
+                        <p><strong>Animal Type:</strong> ${animalType}</p>
+                        <p><strong>Condition:</strong> ${condition}</p>
+                        <p><strong>Location:</strong> ${location}</p>
+                        <p><strong>Description:</strong> ${description || "No description provided"}</p>
+                        ${photoHTML}
+                    `;
+                } else {
+                    animalList.innerHTML = "<p>No reported animals yet.</p>";
+                }
+            }
+        
+            document.addEventListener("DOMContentLoaded", function() {
+                loadUserData();
+                loadAnimalData();
+            });
+        </script>
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - PawRescue</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Create an Account</h2>
+        <p>Sign up to report stray animals and help the community</p>
+
+        <form id="register-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account?<button onclick="window.location.href='register.html'">Go to Register</button></p>
+
+    </div>
+
+    <script>
+        document.getElementById("register-form").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+    
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+    
+            // İstifadəçi məlumatlarını yadda saxla
+            localStorage.setItem("userName", name);
+            localStorage.setItem("userEmail", email);
+    
+            alert("Registration successful! Redirecting to Home...");
+            window.location.href = "main.html"; // maine yönləndir
+        });
+    </script>
+    
+
+</body>
+</html>

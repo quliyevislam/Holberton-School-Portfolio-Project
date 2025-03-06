@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <!-- Sidebar Navigation -->
+     <aside class="sidebar">
+        <h2 class="logo">PawRescue 🐾</h2>
+        <nav>
+            <ul>
+                <li><a href="#">🏠 Home</a></li>
+                <li><a href="#">📜 Report Animal</a></li>
+                <li><a href="#">📍 Map</a></li>
+                <li><a href="#">💬 Chat</a></li>
+                <li><a href="#">🌍 Community</a></li>
+                <li><a href="#">💖 Donate</a></li>
+                <li><a href="./profile.html">👤 Profile</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+  
+    <main class="content">
+        <header>
+          <a href="./register.html"> <button class="login-btn">Log In/Sign Up</button></a>
+        </header>
+
+        <section class="form-container">
+            <h2>Animal Assessment Form</h2>
+            <p>Provide details about the stray animal you've encountered</p>
+
+            <form id="assessment-form">
+                <label for="animal-type">Animal Type</label>
+                <select id="animal-type" required>
+                    <option value="">Select animal type</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="bird">Bird</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="condition">Condition</label>
+                <select id="condition" required>
+                    <option value="">Select animal condition</option>
+                    <option value="healthy">Healthy</option>
+                    <option value="injured">Injured</option>
+                    <option value="abandoned">Abandoned</option>
+                </select>
+
+                <label for="location">Location</label>
+                <input type="text" id="location" placeholder="Enter the animal’s location" required>
+
+                <label for="description">Description</label>
+                <textarea id="description" placeholder="Provide any additional details about the animal"></textarea>
+
+                <label for="photo">Photo Upload</label>
+                <input type="file" id="photo" accept="image/*">
+
+                <button type="submit">Submit Assessment</button>
+            </form>
+        </section>
+    </main>
+
+   
+    <header>
+        <button class="login-btn" onclick="redirectToProfile()">Profile</button>
+    </header>
+    
+    <script>
+        document.getElementById("assessment-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            const animalType = document.getElementById("animal-type").value;
+            const condition = document.getElementById("condition").value;
+            const location = document.getElementById("location").value;
+            const description = document.getElementById("description").value;
+            const photoInput = document.getElementById("photo");
+    
+            if (photoInput.files.length > 0) {
+                const file = photoInput.files[0];
+                const reader = new FileReader();
+    
+                reader.onload = function(event) {
+                    const photoBase64 = event.target.result;
+                    localStorage.setItem("animalPhoto", photoBase64); // Şəkli yadda saxlayırıq
+                    saveAnimalData(animalType, condition, location, description);
+                };
+    
+                reader.readAsDataURL(file);
+            } else {
+                saveAnimalData(animalType, condition, location, description);
+            }
+        });
+    
+        function saveAnimalData(animalType, condition, location, description) {
+            localStorage.setItem("animalType", animalType);
+            localStorage.setItem("condition", condition);
+            localStorage.setItem("location", location);
+            localStorage.setItem("description", description);
+    
+            alert("Animal report submitted successfully!");
+            window.location.href = "profile.html"; // Profili aç
+        }
+    </script>
+    
+    
+    
+</body>
+</html>
