@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, flash, Flask, jso
 from app.main import bp as main
 from app.models import db, User, Shelter
 from app.CRUD.location import create_new_location, get_location_by_id, update_location_by_id, delete_location_by_id, get_all_locations
-from app.CRUD.user import create_new_user, get_user_by_id, update_user_by_id, delete_user_by_id, get_all_users
+from app.CRUD.user import create_new_user, get_user_by_id, update_user_by_id, delete_user_by_id, get_all_users, create_admin_user
 from app.CRUD.shelter_account import create_new_shelter_account, get_all_shelter_accounts, get_shelter_account_by_id, update_shelter_account, delete_shelter_account_by_id
 from app.CRUD.cat_shelter import create_cat_shelter, get_all_cats, get_cat_by_id, update_cat, delete_cat
 from app.CRUD.dog_shelter import create_dog_shelter, get_all_dogs, get_dog_by_id, update_dog, delete_dog
@@ -110,66 +110,6 @@ def create_user():
         create_new_user(name=request.form['name'], email=email, password=password)
         return redirect(url_for('main.get_users'))
     return render_template('user/create_user.html')
-
-@main.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        data = request.get_json()
-        email = data.get('email')
-        password = data.get('password')
-
-        app.logger.debug(f"Login attempt with email: {email}")
-
-        if email == 'admin@admin' and password == 'admin':
-            access_token = create_access_token(identity='admin')
-            flash('Logged in as admin successfully!', 'success')
-            response = jsonify(access_token=access_token)
-            response.status_code = 200
-            response.headers['Location'] = url_for('main.admin')
-            return response
-
-        user = User.query.filter_by(email=email).first()
-
-        if user and check_password_hash(user.password, password):
-            access_token = create_access_token(identity=user.id)
-            flash('Logged in successfully!', 'success')
-            response = jsonify(access_token=access_token)
-            response.status_code = 200
-            response.headers['Location'] = url_for('main.home')
-            return response
-        else:
-            app.logger.debug(f"Login failed for email: {email}")
-            flash('Login failed. Check your email and password.', 'danger')
-            return jsonify({"msg": "Login failed. Check your email and password."}), 401
-
-    return render_template('auth/login.html')
-
-@main.route('/signup', methods=['GET', 'POST'])
-def signup():
-    if request.method == 'POST':
-        try:
-            data = request.get_json()
-            name = data.get('name')
-            email = data.get('email')
-            password = data.get('password')
-            confirm_password = data.get('confirm_password')
-
-            if password != confirm_password:
-                flash('Passwords do not match!', 'danger')
-                return jsonify({"msg": "Passwords do not match!"}), 400
-
-            hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-            new_user = User(name=name, email=email, password=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
-
-            flash('Account created successfully!', 'success')
-            return jsonify({"msg": "Account created successfully!"}), 201
-        except Exception as e:
-            app.logger.error(f"Error creating user: {e}")
-            return jsonify({"msg": "Internal server error"}), 500
-
-    return render_template('auth/sign_up.html')
 
 @main.route('/user/update/<int:user_id>', methods=['GET', 'POST'])
 @jwt_required()
@@ -352,9 +292,77 @@ def protected():
     user = get_user_by_id(current_user_id)
     return jsonify(logged_in_as=user.email), 200
 
-@main.route('/admin')
+@main.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.get_json()
+            name = data.get('name')
+            email = data.get('email')
+            password = data.get('password')
+            confirm_password = data.get('confirm_password')
+            shelter_id = data.get('shelter_id')
+
+            logger.debug(f"Received signup request with email: {email}")
+
+            if not name or not email or not password:
+                logger.debug("Missing required fields")
+                return jsonify({"msg": "Missing required fields"}), 400
+
+            if password != confirm_password:
+                logger.debug("Passwords do not match")
+                return jsonify({"msg": "Passwords do not match"}), 400
+
+            if User.query.filter_by(email=email).first():
+                logger.debug(f"Signup attempt with already registered email: {email}")
+                return jsonify({"msg": "Email already registered"}), 409
+
+            create_new_user(name=name, email=email, password=password, shelter_id=shelter_id)
+
+            logger.debug(f"User created successfully with email: {email}")
+            return jsonify({"msg": "User created successfully"}), 201
+        else:
+            logger.debug("Request must be JSON")
+            return jsonify({"msg": "Request must be JSON"}), 415
+    return render_template('auth/sign_up.html')
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.is_json:
+            data = request.get_json()
+            email = data.get('email')
+            password = data.get('password')
+
+            if not email or not password:
+                return jsonify({"msg": "Missing email or password"}), 400
+
+            user = User.query.filter_by(email=email).first()
+
+            if user and check_password_hash(user.password, password):
+                access_token = create_access_token(identity=user.id)
+                return jsonify({"access_token": access_token}), 200
+
+            shelter_admin = shelter_account.query.filter_by(email=email).first()
+            
+            if shelter_admin and check_password_hash(shelter_admin.password, password):
+                access_token = create_access_token(identity=f"admin-{shelter_admin.id}")
+                return jsonify({"access_token": access_token}), 200
+
+            return jsonify({"msg": "Invalid email or password"}), 401
+        else:
+            return jsonify({"msg": "Request must be JSON"}), 415
+    return render_template('auth/login.html')
+
+@main.route('/admin', methods=['GET'])
 @jwt_required()
 def admin():
-    return "Welcome Admin!"
+    current_identity = get_jwt_identity()
 
-
+    if str(current_identity).startswith("admin-"):
+        admin_id = int(current_identity.split("-")[1])
+        admin = shelter_account.query.get(admin_id)
+        if admin:
+            return jsonify({"msg": "Welcome, Admin!", "admin_email": admin.email}), 200
+    else:
+        return jsonify({"msg": "Access forbidden"}), 403

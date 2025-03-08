@@ -15,7 +15,7 @@
 
     <main class="auth-container">
         <h1 class="form-title">Create Account</h1>
-        <form method="POST" action="{{ url_for('main.signup') }}">
+        <form id="signup-form">
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" required>
@@ -32,11 +32,44 @@
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
             </div>
+            <div class="form-group">
+                <label for="shelter_id">Shelter ID (optional)</label>
+                <input type="text" id="shelter_id" name="shelter_id">
+            </div>
             <button type="submit" class="submit-btn">Sign Up</button>
             <div class="auth-links">
                 <p>Already have an account? <a href="/login">Sign In</a></p>
             </div>
         </form>
     </main>
+    <script>
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var confirm_password = document.getElementById('confirm_password').value;
+        var shelter_id = document.getElementById('shelter_id').value;
+
+        fetch('/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name: name, email: email, password: password, confirm_password: confirm_password, shelter_id: shelter_id })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.msg === "User created successfully") {
+                window.location.href = '/login';
+            } else {
+                alert(data.msg);
+            }
+        })
+        .catch(error => {
+            alert('An error occurred: ' + error.message);
+        });
+    });
+    </script>
 </body>
 </html>
