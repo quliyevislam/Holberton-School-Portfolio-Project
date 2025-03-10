@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map - PawRescue</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Retained styles for animal cards */
+    .animal-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .animal-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+    .animal-image {
+      height: 180px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .animal-details {
+      padding: 1rem;
+    }
+    .animal-type {
+      display: inline-block;
+      background-color: #EFF6FF;
+      color: #3B82F6;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .animal-location {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: #6B7280;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+    .animal-time {
+      color: #6B7280;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo">
+        <span class="logo-text">PawRescue</span>
+      </div>
+      
+      <button class="mobile-menu-button" id="menuToggle">
+        <span class="menu-icon">☰</span>
+      </button>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="report.html" class="nav-link">Report Animal</a>
+        <a href="map.html" class="nav-link active">Map</a>
+        <a href="community.html" class="nav-link">Community</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="signup.html" class="nav-link">Sign Up</a>
+      </div>
+      
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="report.html" class="mobile-nav-link">Report Animal</a>
+        <a href="map.html" class="mobile-nav-link active">Map</a>
+        <a href="community.html" class="mobile-nav-link">Community</a>
+        <a href="login.html" class="mobile-nav-link">Login</a>
+        <a href="signup.html" class="mobile-nav-link">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+      <div class="page-header">
+        <h1>Animal Location Map</h1>
+        <p>Find stray animals in your area that need help</p>
+      </div>
+
+      
+      <div class="recent-reports">
+        <h2>Recent Reports</h2>
+        <p>These animals were recently reported in your area</p>
+        
+        <div class="services-grid" style="margin-top: 1.5rem;">
+          <div class="animal-card">
+            <h3>Enter here</h3>
+          </div>
+
+          <div class="animal-card">
+            <h3>Enter here</h3>
+          </div>
+
+          <div class="animal-card">
+            <h3>Enter here</h3>
+          </div>
+
+          <div class="animal-card">
+            <h3>Ehter here</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <span class="logo-text">PawRescue</span>
+        <p>Helping stray animals find their forever homes</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Navigation</h4>
+          <a href="index.html">Home</a>
+          <a href="report.html">Report Animal</a>
+          <a href="map.html">Map</a>
+          <a href="community.html">Community</a>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="#">About Us</a>
+          <a href="#">FAQ</a>
+          <a href="#">Blog</a>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <p>info@pawrescue.org</p>
+          <p>Azerbaijan</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Removed Leaflet JS and map-specific script -->
+  <script src="script.js"></script>
+</body>
+</html>

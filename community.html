@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community - PawRescue</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .community-tabs {
+      display: flex;
+      border-bottom: 1px solid #E5E7EB;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+    }
+    .tab-button {
+      padding: 1rem 1.5rem;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-weight: 500;
+      color: #6B7280;
+      white-space: nowrap;
+    }
+    .tab-button.active {
+      color: #3B82F6;
+      border-bottom-color: #3B82F6;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .post-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .post-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #E5E7EB;
+      margin-right: 0.75rem;
+      overflow: hidden;
+    }
+    .post-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .post-meta {
+      flex: 1;
+    }
+    .post-author {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    .post-time {
+      font-size: 0.875rem;
+      color: #6B7280;
+    }
+    .post-content {
+      margin-bottom: 1rem;
+    }
+    .post-image {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .post-actions {
+      display: flex;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #E5E7EB;
+    }
+    .post-action {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #6B7280;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .post-action:hover {
+      color: #3B82F6;
+    }
+    .event-card {
+      display: flex;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .event-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #3B82F6;
+      color: white;
+      padding: 1rem;
+      min-width: 80px;
+    }
+    .event-day {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .event-month {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+    }
+    .event-details {
+      padding: 1rem;
+      flex: 1;
+    }
+    .event-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .event-location, .event-time {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #6B7280;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+    .event-description {
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .event-attendees {
+      display: flex;
+      align-items: center;
+    }
+    .attendee-avatars {
+      display: flex;
+      margin-right: 0.75rem;
+    }
+    .attendee-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background-color: #E5E7EB;
+      margin-left: -8px;
+      overflow: hidden;
+    }
+    .attendee-avatar:first-child {
+      margin-left: 0;
+    }
+    .attendee-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .attendee-count {
+      font-size: 0.875rem;
+      color: #6B7280;
+    }
+    .community-sidebar {
+      background-color: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem;
+    }
+    .sidebar-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .volunteer-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #F3F4F6;
+    }
+    .volunteer-item:last-child {
+      border-bottom: none;
+    }
+    .volunteer-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #E5E7EB;
+      margin-right: 0.75rem;
+      overflow: hidden;
+    }
+    .volunteer-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .volunteer-info {
+      flex: 1;
+    }
+    .volunteer-name {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    .volunteer-role {
+      font-size: 0.875rem;
+      color: #6B7280;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-left: 0.5rem;
+    }
+    .badge-blue {
+      background-color: #EFF6FF;
+      color: #3B82F6;
+    }
+    .badge-green {
+      background-color: #ECFDF5;
+      color: #10B981;
+    }
+    .badge-amber {
+      background-color: #FFFBEB;
+      color: #F59E0B;
+    }
+    .community-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+    }
+    .create-post {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .create-post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .create-post-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #E5E7EB;
+      margin-right: 0.75rem;
+    }
+    .create-post-input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #E5E7EB;
+      border-radius: 20px;
+      background-color: #F9FAFB;
+    }
+    .create-post-input:focus {
+      outline: none;
+      border-color: #3B82F6;
+    }
+    .create-post-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+    .post-type-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+    .post-type-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: none;
+      color: #6B7280;
+      cursor: pointer;
+    }
+    .post-type-button:hover {
+      color: #3B82F6;
+    }
+    
+    @media (max-width: 768px) {
+      .community-layout {
+        grid-template-columns: 1fr;
+      }
+      .event-card {
+        flex-direction: column;
+      }
+      .event-date {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="logo">
+        <span class="logo-text">PawRescue</span>
+      </div>
+      
+      <button class="mobile-menu-button" id="menuToggle">
+        <span class="menu-icon">☰</span>
+      </button>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="report.html" class="nav-link">Report Animal</a>
+        <a href="map.html" class="nav-link">Map</a>
+        <a href="community.html" class="nav-link active">Community</a>
+        <a href="login.html" class="nav-link">Login</a>
+        <a href="signup.html" class="nav-link">Sign Up</a>
+      </div>
+      
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="report.html" class="mobile-nav-link">Report Animal</a>
+        <a href="map.html" class="mobile-nav-link">Map</a>
+        <a href="login.html" class="mobile-nav-link">Login</a>
+        <a href="signup.html" class="mobile-nav-link">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+      <div class="page-header">
+        <h1>PawRescue Community</h1>
+        <p>Connect with fellow animal lovers and rescuers</p>
+      </div>
+
+      <div class="community-tabs">
+        <button class="tab-button active" data-tab="feed">Feed</button>
+        <button class="tab-button" data-tab="events">Events</button>
+
+      </div>
+
+      <div class="community-layout">
+        <div class="community-main">
+          <!-- Feed Tab -->
+          <div id="feed" class="tab-content active">
+            <div class="create-post">
+              <div class="create-post-header">
+                <div class="create-post-avatar"></div>
+                <input type="text" class="create-post-input" placeholder="Share something with the community...">
+              </div>
+              <div class="create-post-actions">
+                <div class="post-type-buttons">
+                  <button class="post-type-button">📷 Photo</button>
+                  <button class="post-type-button">📅 Event</button>
+                  <button class="post-type-button">📝 Article</button>
+                </div>
+                <button class="primary-button">Post</button>
+              </div>
+            </div>
+
+            <div class="post-card">
+              <div class="post-header">
+                <div class="post-avatar">
+                  <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User avatar">
+                </div>
+                <div class="post-meta">
+                  <div class="post-author">Sarah Johnson</div>
+                  <div class="post-time">2 hours ago</div>
+                </div>
+              </div>
+              <div class="post-content">
+                <p>Just rescued this beautiful puppy from the side of the highway. He was scared and hungry, but is now safe at the shelter. Looking for a foster home!</p>
+                <img src="https://placedog.net/600/400?id=10" alt="Rescued puppy" class="post-image">
+              </div>
+              <div class="post-actions">
+                <button class="post-action">❤️ Like (24)</button>
+                <button class="post-action">💬 Comment (8)</button>
+                <button class="post-action">↗️ Share</button>
+              </div>
+            </div>
+
+            <div class="post-card">
+              <div class="post-header">
+                <div class="post-avatar">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User avatar">
+                </div>
+                <div class="post-meta">
+                  <div class="post-author">Michael Torres <span class="badge badge-blue">Volunteer</span></div>
+                  <div class="post-time">Yesterday</div>
+                </div>
+              </div>
+              <div class="post-content">
+                <p>Our weekend adoption event was a huge success! 15 animals found their forever homes. Thank you to everyone who came out to support!</p>
+                <img src="https://placeimg.com/600/400/animals/5" alt="Adoption event" class="post-image">
+              </div>
+              <div class="post-actions">
+                <button class="post-action">❤️ Like (42)</button>
+                <button class="post-action">💬 Comment (12)</button>
+                <button class="post-action">↗️ Share</button>
+              </div>
+            </div>
+
+            <div class="post-card">
+              <div class="post-header">
+                <div class="post-avatar">
+                  <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="User avatar">
+                </div>
+                <div class="post-meta">
+                  <div class="post-author">Emily Chen <span class="badge badge-green">Veterinarian</span></div>
+                  <div class="post-time">3 days ago</div>
+                </div>
+              </div>
+              <div class="post-content">
+                <p>Quick tip: With summer approaching, remember to never leave your pets in a hot car. Even with windows cracked, temperatures can rise to dangerous levels within minutes. Stay safe!</p>
+              </div>
+              <div class="post-actions">
+                <button class="post-action">❤️ Like (56)</button>
+                <button class="post-action">💬 Comment (7)</button>
+                <button class="post-action">↗️ Share</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Events Tab -->
+          <div id="events" class="tab-content">
+            <div class="event-card">
+              <div class="event-date">
+                <div class="event-day">15</div>
+                <div class="event-month">Jun</div>
+              </div>
+              <div class="event-details">
+                <h3 class="event-title">Weekend Adoption Fair</h3>
+                <div class="event-location">📍 Central Park, Main Pavilion</div>
+                <div class="event-time">🕒 10:00 AM - 4:00 PM</div>
+                <p class="event-description">Join us for our biggest adoption event of the summer! Meet dozens of dogs, cats, and other animals looking for their forever homes.</p>
+                <div class="event-attendees">
+                  <div class="attendee-avatars">
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Attendee">
+                    </div>
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Attendee">
+                    </div>
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Attendee">
+                    </div>
+                  </div>
+                  <div class="attendee-count">42 people attending</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-date">
+                <div class="event-day">22</div>
+                <div class="event-month">Jun</div>
+              </div>
+              <div class="event-details">
+                <h3 class="event-title">Volunteer Training Workshop</h3>
+                <div class="event-location">📍 PawRescue Headquarters</div>
+                <div class="event-time">🕒 6:00 PM - 8:00 PM</div>
+                <p class="event-description">Learn how to become an effective animal rescue volunteer. Training includes handling techniques, first aid basics, and rescue protocols.</p>
+                <div class="event-attendees">
+                  <div class="attendee-avatars">
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Attendee">
+                    </div>
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Attendee">
+                    </div>
+                  </div>
+                  <div class="attendee-count">18 people attending</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-card">
+              <div class="event-date">
+                <div class="event-day">30</div>
+                <div class="event-month">Jun</div>
+              </div>
+              <div class="event-details">
+                <h3 class="event-title">Fundraising Gala Dinner</h3>
+                <div class="event-location">📍 Grand Hotel Ballroom</div>
+                <div class="event-time">🕒 7:00 PM - 11:00 PM</div>
+                <p class="event-description">Annual black-tie fundraiser to support our rescue operations. Tickets include dinner, entertainment, and silent auction.</p>
+                <div class="event-attendees">
+                  <div class="attendee-avatars">
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Attendee">
+                    </div>
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/men/29.jpg" alt="Attendee">
+                    </div>
+                    <div class="attendee-avatar">
+                      <img src="https://randomuser.me/api/portraits/women/30.jpg" alt="Attendee">
+                    </div>
+                  </div>
+                  <div class="attendee-count">64 people attending</div>
+                </div>
+              </div>
+            </div>
+          </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <span class="logo-text">PawRescue</span>
+        <p>Helping stray animals find their forever homes</p>
+      </div>
+      
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Navigation</h4>
+          <a href="index.html">Home</a>
+          <a href="report.html">Report Animal</a>
+          <a href="map.html">Map</a>
+          <a href="community.html">Community</a>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="#">About Us</a>
+          <a href="#">FAQ</a>
+          <a href="#">Blog</a>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <p>info@pawrescue.org</p>
+          <p>Azerbaijan</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Tab functionality
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons and contents
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // Show corresponding content
+          const tabId = this.getAttribute('data-tab');
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
