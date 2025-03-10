@@ -1,75 +1,73 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up - PawRescue</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/sign_up.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/sign_up.css') }}"
+    />
+  </head>
+  <body>
     <header class="header">
-        <div class="logo">
-            PawRescue 🐾
-        </div>
+      <div class="logo">PawRescue 🐾</div>
     </header>
 
     <main class="auth-container">
-        <h1 class="form-title">Create Account</h1>
-        <form id="signup-form">
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-            </div>
-            <div class="form-group">
-                <label for="shelter_id">Shelter ID (optional)</label>
-                <input type="text" id="shelter_id" name="shelter_id">
-            </div>
-            <button type="submit" class="submit-btn">Sign Up</button>
-            <div class="auth-links">
-                <p>Already have an account? <a href="/login">Sign In</a></p>
-            </div>
-        </form>
+      <h1 class="form-title">Create Account</h1>
+      <form id="signup-form" method="POST" action="/signup">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="shelter_id">Shelter ID (optional)</label>
+          <input type="text" id="shelter_id" name="shelter_id" />
+        </div>
+        <button type="submit" class="submit-btn">Sign Up</button>
+        <div class="auth-links">
+          <p>Already have an account? <a href="/login">Sign In</a></p>
+        </div>
+      </form>
     </main>
     <script>
-    document.getElementById('signup-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var confirm_password = document.getElementById('confirm_password').value;
-        var shelter_id = document.getElementById('shelter_id').value;
-
-        fetch('/signup', {
+        const form = document.getElementById('signup-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            fetch('/signup', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name: name, email: email, password: password, confirm_password: confirm_password, shelter_id: shelter_id })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.msg === "User created successfully") {
+            body: formData,
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                alert(data.error);
+                } else {
                 window.location.href = '/login';
-            } else {
-                alert(data.msg);
-            }
-        })
-        .catch(error => {
-            alert('An error occurred: ' + error.message);
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         });
-    });
     </script>
-</body>
+  </body>
 </html>

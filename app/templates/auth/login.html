@@ -34,29 +34,18 @@
     <script>
     document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-
+        const formData = new FormData(event.target);
         fetch('/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email, password: password })
+            body: formData
         })
-        .then(response => {
-            if (response.status === 200) {
-                return response.json().then(data => {
-                    localStorage.setItem('access_token', data.access_token);
-                    const location = response.headers.get('Location');
-                    window.location.href = location ? location : '/';
-                });
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
             } else {
-                throw new Error('Login failed. Check your email and password.');
+                window.location.href = '/';
             }
-        })
-        .catch(error => {
-            alert(error.message);
         });
     });
     </script>

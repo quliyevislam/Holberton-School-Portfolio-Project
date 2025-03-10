@@ -13,6 +13,7 @@ jwt = JWTManager()
 
 from app.CRUD.user import create_admin_user
 
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -20,9 +21,6 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
-
-    with app.app_context():
-        create_admin_user()
 
     if not os.path.exists("logs"):
         os.mkdir("logs")
@@ -41,11 +39,14 @@ def create_app(config_class=Config):
         app.logger.info("Shelter startup")
 
     from app.main import bp as main_blueprint
+
     app.register_blueprint(main_blueprint)
-    
+
     from app.errors import bp as errors_blueprint
+
     app.register_blueprint(errors_blueprint)
 
     return app
+
 
 from app import models
