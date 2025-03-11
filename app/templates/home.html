@@ -1,0 +1,30 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}PawRescue - Home{% endblock %}
+
+{% block content %}
+<header class="top-header">
+    <div class="logo">
+        <h1>PawRescue</h1>
+        <span class="paw-icon">🐾</span>
+    </div>
+    <a href="{{ url_for('main.signup') }}" class="login-btn">Log In/Sign Up</a>
+</header>
+
+<section class="shelter-feed">
+    <h2>Available Shelters</h2>
+    <div class="shelter-list">
+        {% if shelters %}
+            {% for shelter in shelters %}
+            <div class="shelter-item">
+                <h3>{{ shelter.name }}</h3>
+                <p>{{ shelter.description }}</p>
+                <a href="{{ url_for('shelter.details', shelter_id=shelter.id) }}">Learn More</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No shelters available at the moment.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

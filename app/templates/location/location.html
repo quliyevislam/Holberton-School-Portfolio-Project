@@ -1,0 +1,15 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Location Details{% endblock %}
+
+{% block content %}
+<h2>{{ location.name }}</h2>
+<p>{{ location.description }}</p>
+<p>{{ location.info }}</p>
+<a href="{{ url_for('main.update_location', location_id=location.id) }}">Update Location</a>
+<form action="{{ url_for('main.delete_location', location_id=location.id) }}" method="POST" style="display:inline;">
+    <button type="submit">Delete Location</button>
+</form>
+<br>
+<a href="{{ url_for('main.location_list') }}">Back to Locations List</a>
+{% endblock %}

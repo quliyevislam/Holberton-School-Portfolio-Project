@@ -1,0 +1,11 @@
+{% extends "constructor/base.html" %}
+
+{% block content %}
+<h1>All Shelter Dogs</h1>
+<a href="{{ url_for('main.create_dog') }}" class="btn btn-success">Create New Dog</a>
+<ul>
+    {% for dog in dogs %}
+    <li><a href="{{ url_for('main.dog', dog_id=dog.id) }}">{{ dog.name }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

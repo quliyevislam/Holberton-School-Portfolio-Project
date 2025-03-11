@@ -1,0 +1,18 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Cat{% endblock %}
+
+{% block content %}
+
+<h1>{{ cat.name }}</h1>
+<p>Age: {{ cat.age }}</p>
+<p>Breed: {{ cat.breed }}</p>
+<p>Description: {{ cat.description }}</p>
+<p>Status: {{ cat.status }}</p>
+
+<a href="{{ url_for('main.update_cat_route', cat_id=cat.id) }}" class="btn btn-primary">Update</a>
+<form action="{{ url_for('main.delete_cat_route', cat_id=cat.id) }}" method="POST" style="display:inline;">
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+<a href="{{ url_for('main.cat_list') }}" class="btn btn-secondary">Back to Cat List</a>
+{% endblock %}

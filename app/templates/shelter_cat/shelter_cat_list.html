@@ -1,0 +1,19 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Cat List{% endblock %}
+
+{% block content %}
+<h1>Cat List</h1>
+<a href="{{ url_for('main.create_cat') }}" class="btn btn-success">Create New Cat</a>
+<ul>
+    {% for cat in cats %}
+    <li>
+        {{ cat.name }} - 
+        <a href="{{ url_for('main.update_cat_route', cat_id=cat.id) }}">Edit</a> | 
+        <form action="{{ url_for('main.delete_cat_route', cat_id=cat.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<h2>{{ user.name }}</h2>
+<p>Email: {{ user.email }}</p>
+<p>Created At: {{ user.created_at }}</p>
+<p>Updated At: {{ user.updated_at }}</p>
+<a href="{{ url_for('main.get_users') }}">Back to Users List</a>
+<a href="{{ url_for('main.update_user', user_id=user.id) }}">Update User</a>
+<form action="{{ url_for('main.delete_user', user_id=user.id) }}" method="POST" style="display:inline;">
+    <button type="submit">Delete User</button>
+</form>
+{% endblock %}

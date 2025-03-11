@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PawRescue{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-header">
+        <div class="logo">
+            <h1>PawRescue</h1>
+            <span class="paw-icon">🐾</span>
+        </div>
+        
+    </header>
+
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.home') }}"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="{{ url_for('main.report') }}"><i class="fas fa-file-alt"></i>Report Animal</a></li>
+                <li><a href="{{ url_for('main.map') }}"><i class="fas fa-map-marker-alt"></i>Map</a></li>
+                <li><a href="{{ url_for('main.chat') }}"><i class="fas fa-comments"></i>Chat</a></li>
+                <li><a href="{{ url_for('main.community') }}"><i class="fas fa-users"></i>Community</a></li>
+                <li><a href="{{ url_for('main.donate') }}"><i class="fas fa-hand-holding-heart"></i>Donate</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    {% include 'constructor/footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var forms = document.querySelectorAll('form');
+            forms.forEach(function(form) {
+                if (form.method.toUpperCase() === 'POST') {
+                    var methodInput = form.querySelector('input[name="_method"]');
+                    if (methodInput) {
+                        form.method = methodInput.value;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

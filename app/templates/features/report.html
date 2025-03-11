@@ -1,0 +1,157 @@
+{% extends "constructor/base.html" %}
+
+{% block title %}Animal Assessment Form{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="form-title">Animal Assessment Form</h1>
+    <p class="form-subtitle">Provide details about the stray animal you've encountered</p>
+
+    <form method="post" enctype="multipart/form-data" class="assessment-form">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="first_name">Name</label>
+                <input type="text" id="first_name" name="first_name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="last_name" name="last_name" placeholder="Surname" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="forexample@mail.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Number</label>
+            <div class="phone-input">
+                <select name="country_code" id="country_code">
+                    <option value="055">055</option>
+                </select>
+                <input type="tel" id="phone" name="phone" placeholder="000-00-00" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" placeholder="forexample@mail.com" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Photo Upload</label>
+            <div class="upload-area">
+                <input type="file" id="photo" name="photo" accept="image/*" class="file-input">
+                <div class="upload-placeholder">
+                    <img src="/static/upload-icon.svg" alt="Upload icon">
+                    <p>Click to upload or drag and drop SVG, PNG or JPG (max. 800x400px)</p>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Assessment</button>
+    </form>
+</div>
+
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .form-title {
+        font-size: 2rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-subtitle {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+    .assessment-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-group label {
+        font-weight: 500;
+    }
+
+    input, textarea, select {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .phone-input {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 0.5rem;
+    }
+
+    .upload-area {
+        border: 2px dashed #ddd;
+        border-radius: 4px;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .file-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .upload-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        color: #666;
+    }
+
+    .submit-btn {
+        background-color: #3B82F6;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: fit-content;
+        align-self: flex-end;
+    }
+
+    .submit-btn:hover {
+        background-color: #2563EB;
+    }
+</style>
+{% endblock %}
