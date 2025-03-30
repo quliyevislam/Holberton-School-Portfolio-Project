@@ -3,56 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Map - PawRescue</title>
+  <title>Terms of Service - PawRescue</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/svg" href="ico.svg">
   <style>
-    /* Retained styles for animal cards */
-    .animal-card {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.2s;
+    .content-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     }
-    .animal-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    h1 {
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #2C3E50;
     }
-    .animal-image {
-      height: 180px;
-      width: 100%;
-      object-fit: cover;
+    h2 {
+      font-size: 1.5em;
+      margin-top: 15px;
+      color: #3498DB;
     }
-    .animal-details {
-      padding: 1rem;
+    p {
+      font-size: 1em;
+      line-height: 1.5;
+      color: #555;
     }
-    .animal-type {
-      display: inline-block;
-      background-color: #EFF6FF;
-      color: #3B82F6;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      margin-bottom: 0.5rem;
-    }
-    .animal-location {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-      color: #6B7280;
-      font-size: 0.875rem;
-      margin-top: 0.5rem;
-    }
-    .animal-time {
-      color: #6B7280;
-      font-size: 0.75rem;
-      margin-top: 0.5rem;
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.85em;
+      color: #777;
     }
   </style>
 </head>
 <body>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="container navbar-container">
@@ -68,7 +57,7 @@
       <div class="nav-links">
         <a href="index.html" class="nav-link">Home</a>
         <a href="report.html" class="nav-link">Report Animal</a>
-        <a href="map.html" class="nav-link active">Map</a>
+        <a href="map.html" class="nav-link">Map</a>
         <a href="community.html" class="nav-link">Community</a>
         <a href="adopt.html" class="nav-link">Adopt</a>
         <a href="signin.html" class="nav-link">Sign In</a>
@@ -79,7 +68,7 @@
       <div class="mobile-menu" id="mobileMenu">
         <a href="index.html" class="mobile-nav-link">Home</a>
         <a href="report.html" class="mobile-nav-link">Report Animal</a>
-        <a href="map.html" class="mobile-nav-link active">Map</a>
+        <a href="map.html" class="mobile-nav-link">Map</a>
         <a href="community.html" class="mobile-nav-link">Community</a>
         <a href="adopt.html" class="mobile-nav-link">Adopt</a>
         <a href="signin.html" class="mobile-nav-link">Sign In</a>
@@ -89,37 +78,34 @@
     </div>
   </nav>
 
-  <main>
-    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
-      <div class="page-header">
-        <h1>Animal Location Map</h1>
-        <p>Find stray animals in your area that need help</p>
-        
-      </div>
-
+  <main class="content-page">
+    <div class="content-container">
+      <h1>Terms of Service</h1>
       
-      <div class="recent-reports">
-        <h2>Recent Reports</h2>
-        <p>These animals were recently reported in your area</p>
-        
-        <div class="services-grid" style="margin-top: 1.5rem;">
-          <div class="animal-card">
-            <h3>Enter here</h3>
-          </div>
-
-          <div class="animal-card">
-            <h3>Enter here</h3>
-          </div>
-
-          <div class="animal-card">
-            <h3>Enter here</h3>
-          </div>
-
-          <div class="animal-card">
-            <h3>Ehter here</h3>
-          </div>
-        </div>
-      </div>
+      <section>
+        <h2>1. Introduction</h2>
+        <p>Welcome to PawRescue. These Terms of Service outline the rules and regulations for using our website.</p>
+      </section>
+      
+      <section>
+        <h2>2. Use of the Website</h2>
+        <p>By accessing this website, you accept these terms in full. If you disagree with any part of these terms, please do not use our website.</p>
+      </section>
+      
+      <section>
+        <h2>3. User Responsibilities</h2>
+        <p>You agree to use this website only for lawful purposes and in a manner that does not infringe the rights of others.</p>
+      </section>
+      
+      <section>
+        <h2>4. Changes to the Terms</h2>
+        <p>PawRescue may revise these terms at any time. By continuing to use the website, you agree to be bound by the updated terms.</p>
+      </section>
+      
+      <section>
+        <h2>5. Contact Information</h2>
+        <p>If you have any questions regarding these Terms, please contact us at <strong>info@pawrescue.org</strong>.</p>
+      </section>
     </div>
   </main>
 
@@ -175,6 +161,9 @@
     </div>
   </footer>
 
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
