@@ -316,7 +316,7 @@ button {
 .hero-img {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-  transform: perspective(1000px) rotateY(-5deg);
+  transform: perspective(1000px) scale(0.99) ;
   transition: transform 0.5s ease;
 }
 
