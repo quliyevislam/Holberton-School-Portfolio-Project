@@ -4,5 +4,49 @@
 
 {% block content %}
     <h1>Chat</h1>
-    <p>Details about the services offered.</p>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." required>
+            <button type="submit">Send</button>
+        </form>
+        <div id="chat-response">
+            <h3>Response:</h3>
+            <p id="response-text"></p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>
+    const socket = io();
+
+    document.getElementById('chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userInput = document.getElementById('user-input').value;
+        const chatMessages = document.getElementById('chat-messages');
+        const responseText = document.getElementById('response-text');
+
+        // Display user message
+        const userMessage = document.createElement('div');
+        userMessage.textContent = `You: ${userInput}`;
+        chatMessages.appendChild(userMessage);
+
+        // Send message to WebSocket
+        socket.emit('message', { message: userInput });
+
+        // Listen for response
+        socket.on('response', (data) => {
+            if (data.reply) {
+                responseText.textContent = data.reply;
+            } else {
+                responseText.textContent = `Error: ${data.error}`;
+            }
+        });
+
+        // Clear input field
+        document.getElementById('user-input').value = '';
+    });
+</script>
 {% endblock %}
