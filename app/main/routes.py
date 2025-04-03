@@ -10,14 +10,13 @@ import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from config import Config
-import openai
 import os
-from openai import OpenAI
+from together import Together
 from flask_socketio import SocketIO, emit
+import json
+from pydantic import BaseModel, Field
 
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-
-openai.api_key = os.getenv('OPENAI_API_KEY')
+client = Together(timeout=30)
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -27,9 +26,18 @@ app.config.from_object(Config)
 
 socketio = SocketIO(app)
 
+# Define the schema for the output
+class VoiceNote(BaseModel):
+    title: str = Field(description="A title for the voice note")
+    summary: str = Field(description="A short one sentence summary of the voice note.")
+    actionItems: list[str] = Field(
+        description="A list of action items from the voice note"
+    )
+
 @main.route('/')
 def home():
     return render_template('home.html')
+
 @main.route('/about')
 def about():
     return render_template('about.html')
@@ -46,9 +54,57 @@ def report():
 def map():
     return render_template('features/map.html')
 
-@main.route('/chat')
+@main.route('/chat', methods=['GET', 'POST'])
 def chat():
+    if request.method == 'POST':
+        user_message = request.form['message']
+        logger.info(f"Received POST request with message: {user_message}")
+        try:
+            logger.info("Calling Together API with JSON schema...")
+            # Call the Together API with the JSON schema
+            extract = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "The following is a voice message transcript. Only answer in JSON.",
+                    },
+                    {
+                        "role": "user",
+                        "content": user_message,
+                    },
+                ],
+                model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+                response_format={
+                    "type": "json_object",
+                    "schema": VoiceNote.model_json_schema(),
+                },
+            )
+            output = json.loads(extract.choices[0].message.content)
+            logger.info(f"Together API structured response: {json.dumps(output, indent=2)}")
+            return jsonify(output)
+        except Exception as e:
+            logger.error(f"Error while calling Together API: {e}")
+            return jsonify({'error': str(e)}), 500
+    logger.info("Rendering chat page")
     return render_template('features/chat.html')
+
+@socketio.on('message')
+def handle_message(data):
+    user_message = data.get('message')
+    logger.info(f"Received WebSocket message: {user_message}")
+    try:
+        logger.info("Calling Together API...")
+        completion = client.chat.completions.create(
+            model="meta-llama/Llama-3.3-70B-Instruct-Turbo",
+            messages=[{"role": "user", "content": user_message}]
+        )
+        reply = completion.choices[0].message.content
+        logger.info(f"Together API response: {reply}")
+        logger.info("Sending response back to client via WebSocket")
+        emit('response', {'reply': reply}, broadcast=True)
+    except Exception as e:
+        logger.error(f"Error while processing WebSocket message: {e}")
+        emit('response', {'error': str(e)}, broadcast=True)
 
 @main.route('/community')
 def community():
@@ -202,16 +258,13 @@ def create_cat():
         description = request.form.get('description')
         status = request.form.get('status')
         shelter_id = request.form.get('shelter_id')
-
         if not all([name, age, breed, description, status, shelter_id]):
             flash('All fields are required.', 'danger')
             return redirect(url_for('main.create_cat'))
-
         shelter = Shelter.query.get(shelter_id)
         if not shelter:
             flash('Shelter ID does not exist. Please provide a valid Shelter ID.', 'danger')
             return redirect(url_for('main.create_cat'))
-
         create_cat_shelter(id=None, name=name, age=age, breed=breed, description=description, status=status, shelter_id=shelter_id)
         flash('Cat created successfully!', 'success')
         return redirect(url_for('main.cat_list'))
@@ -255,16 +308,13 @@ def create_dog():
         description = request.form.get('description')
         status = request.form.get('status')
         shelter_id = request.form.get('shelter_id')
-
         if not all([name, age, breed, description, status, shelter_id]):
             flash('All fields are required.', 'danger')
             return redirect(url_for('main.create_dog'))
-
         shelter = Shelter.query.get(shelter_id)
         if not shelter:
             flash('Shelter ID does not exist. Please provide a valid Shelter ID.', 'danger')
             return redirect(url_for('main.create_dog'))
-
         create_dog_shelter(id=None, name=name, age=age, breed=breed, description=description, status=status, shelter_id=shelter_id)
         flash('Dog created successfully!', 'success')
         return redirect(url_for('main.dog_list'))
@@ -306,23 +356,17 @@ def signup():
             password = data.get('password')
             confirm_password = data.get('confirm_password')
             shelter_id = data.get('shelter_id')
-
             logger.debug(f"Received signup request with email: {email}")
-
             if not name or not email or not password:
                 logger.debug("Missing required fields")
                 return jsonify({"msg": "Missing required fields"}), 400
-
             if password != confirm_password:
                 logger.debug("Passwords do not match")
                 return jsonify({"msg": "Passwords do not match"}), 400
-
             if User.query.filter_by(email=email).first():
                 logger.debug(f"Signup attempt with already registered email: {email}")
                 return jsonify({"msg": "Email already registered"}), 409
-
             create_new_user(name=name, email=email, password=password, shelter_id=shelter_id)
-
             logger.debug(f"User created successfully with email: {email}")
             return jsonify({"msg": "User created successfully"}), 201
         else:
@@ -337,18 +381,15 @@ def login():
             data = request.get_json()
             email = data.get('email')
             password = data.get('password')
-
             if not email or not password:
                 return jsonify({"msg": "Missing email or password"}), 400
 
             user = User.query.filter_by(email=email).first()
-
             if user and check_password_hash(user.password, password):
                 access_token = create_access_token(identity=user.id)
                 return jsonify({"access_token": access_token}), 200
 
             shelter_admin = shelter_account.query.filter_by(email=email).first()
-            
             if shelter_admin and check_password_hash(shelter_admin.password, password):
                 access_token = create_access_token(identity=f"admin-{shelter_admin.id}")
                 return jsonify({"access_token": access_token}), 200
@@ -362,7 +403,6 @@ def login():
 @jwt_required()
 def admin():
     current_identity = get_jwt_identity()
-
     if str(current_identity).startswith("admin-"):
         admin_id = int(current_identity.split("-")[1])
         admin = shelter_account.query.get(admin_id)
@@ -370,37 +410,3 @@ def admin():
             return jsonify({"msg": "Welcome, Admin!", "admin_email": admin.email}), 200
     else:
         return jsonify({"msg": "Access forbidden"}), 403
-
-@main.route('/api/chat', methods=['POST'])
-def chat_api():
-    data = request.get_json()
-    user_message = data.get('message')
-
-    try:
-        completion = client.chat.completions.create(
-            model="gpt-4o-mini",
-            store=True,
-            messages=[
-                {"role": "user", "content": user_message}
-            ]
-        )
-        reply = completion.choices[0].message['content']
-        return jsonify({'reply': reply})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@socketio.on('message')
-def handle_message(data):
-    user_message = data.get('message')
-    try:
-        completion = client.chat.completions.create(
-            model="gpt-4o-mini",
-            store=True,
-            messages=[
-                {"role": "user", "content": user_message}
-            ]
-        )
-        reply = completion.choices[0].message['content']
-        emit('response', {'reply': reply})
-    except Exception as e:
-        emit('response', {'error': str(e)})
