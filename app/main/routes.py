@@ -10,12 +10,22 @@ import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from config import Config
+import openai
+import os
+from openai import OpenAI
+from flask_socketio import SocketIO, emit
+
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+socketio = SocketIO(app)
 
 @main.route('/')
 def home():
@@ -131,10 +141,12 @@ def delete_user(user_id):
 @main.route('/shelter_account/<int:shelter_account_id>', methods=['GET'])
 def shelter_account(shelter_account_id):
     shelter_account = get_shelter_account_by_id(shelter_account_id)
+    if not shelter_account:
+        flash('Shelter account not found.', 'danger')
+        return redirect(url_for('main.shelter_account_list'))
     return render_template('shelter_account/shelter_account.html', shelter_account=shelter_account)
 
 @main.route('/shelter_account/update/<int:shelter_account_id>', methods=['GET', 'POST'])
-@jwt_required()
 def update_shelter_account_route(shelter_account_id):
     shelter_account = get_shelter_account_by_id(shelter_account_id)
     if request.method == 'POST':
@@ -147,7 +159,6 @@ def update_shelter_account_route(shelter_account_id):
     return render_template('shelter_account/update_shelter_account.html', shelter_account=shelter_account)
 
 @main.route('/shelter_account/delete/<int:shelter_account_id>', methods=['POST'])
-@jwt_required()
 def delete_shelter_account_route(shelter_account_id):
     delete_shelter_account_by_id(shelter_account_id)
     flash('Shelter account deleted successfully!', 'success')
@@ -159,7 +170,6 @@ def shelter_account_list():
     return render_template('shelter_account/shelter_account_list.html', shelter_accounts=shelter_accounts)
 
 @main.route('/shelter_account/create', methods=['GET', 'POST'])
-@jwt_required()
 def create_shelter_account():
     if request.method == 'POST':
         name = request.form.get('name')
@@ -184,7 +194,6 @@ def cat(cat_id):
     return render_template('shelter_cat/shelter_cat.html', cat=cat)
 
 @main.route('/cat/create', methods=['GET', 'POST'])
-@jwt_required()
 def create_cat():
     if request.method == 'POST':
         name = request.form.get('name')
@@ -209,7 +218,6 @@ def create_cat():
     return render_template('shelter_cat/shelter_cat_create.html')
 
 @main.route('/cat/update/<int:cat_id>', methods=['GET', 'POST'])
-@jwt_required()
 def update_cat_route(cat_id):
     cat = get_cat_by_id(cat_id)
     if request.method == 'POST':
@@ -224,7 +232,6 @@ def update_cat_route(cat_id):
     return render_template('shelter_cat/shelter_cat_update.html', cat=cat)
 
 @main.route('/cat/delete/<int:cat_id>', methods=['POST'])
-@jwt_required()
 def delete_cat_route(cat_id):
     delete_cat(cat_id)
     return redirect(url_for('main.cat_list'))
@@ -240,7 +247,6 @@ def dog(dog_id):
     return render_template('shelter_dog/shelter_dog.html', dog=dog)
 
 @main.route('/dog/create', methods=['GET', 'POST'])
-@jwt_required()
 def create_dog():
     if request.method == 'POST':
         name = request.form.get('name')
@@ -265,7 +271,6 @@ def create_dog():
     return render_template('shelter_dog/shelter_dog_create.html')
 
 @main.route('/dog/update/<int:dog_id>', methods=['GET', 'POST'])
-@jwt_required()
 def update_dog_route(dog_id):
     dog = get_dog_by_id(dog_id)
     if request.method == 'POST':
@@ -280,7 +285,6 @@ def update_dog_route(dog_id):
     return render_template('shelter_dog/shelter_dog_update.html', dog=dog)
 
 @main.route('/dog/delete/<int:dog_id>', methods=['POST'])
-@jwt_required()
 def delete_dog_route(dog_id):
     delete_dog(dog_id)
     return redirect(url_for('main.dog_list'))
@@ -366,3 +370,37 @@ def admin():
             return jsonify({"msg": "Welcome, Admin!", "admin_email": admin.email}), 200
     else:
         return jsonify({"msg": "Access forbidden"}), 403
+
+@main.route('/api/chat', methods=['POST'])
+def chat_api():
+    data = request.get_json()
+    user_message = data.get('message')
+
+    try:
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            store=True,
+            messages=[
+                {"role": "user", "content": user_message}
+            ]
+        )
+        reply = completion.choices[0].message['content']
+        return jsonify({'reply': reply})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@socketio.on('message')
+def handle_message(data):
+    user_message = data.get('message')
+    try:
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            store=True,
+            messages=[
+                {"role": "user", "content": user_message}
+            ]
+        )
+        reply = completion.choices[0].message['content']
+        emit('response', {'reply': reply})
+    except Exception as e:
+        emit('response', {'error': str(e)})

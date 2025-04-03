@@ -46,6 +46,10 @@ def create_app(config_class=Config):
 
     app.register_blueprint(errors_blueprint)
 
+    from app.api import bp as api_blueprint
+
+    app.register_blueprint(api_blueprint, url_prefix="/api")
+
     return app
 
 

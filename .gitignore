@@ -38,3 +38,6 @@ htmlcov/
 
 # Windows files
 Thumbs.db
+
+app.db
+migrations

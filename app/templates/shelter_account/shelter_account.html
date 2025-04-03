@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Shelter Account Details</h1>
+{% if shelter_account %}
 <p>Name: {{ shelter_account.name }}</p>
 <p>Email: {{ shelter_account.email }}</p>
 <p>Password: {{ shelter_account.password }}</p>
@@ -12,5 +13,8 @@
 <form action="{{ url_for('main.delete_shelter_account_route', shelter_account_id=shelter_account.id) }}" method="POST" style="display:inline;">
     <button type="submit" class="btn btn-danger">Delete</button>
 </form>
+{% else %}
+<p>Shelter account not found.</p>
+{% endif %}
 <a href="{{ url_for('main.shelter_account_list') }}">Back to Shelter Accounts List</a>
 {% endblock %}
