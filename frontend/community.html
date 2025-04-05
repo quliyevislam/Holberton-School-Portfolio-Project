@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community - PawRescue</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/community.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="./assets/images/ico.svg">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-paw logo-icon"></i>
+        <span class="logo-text">PawRescue</span>
+      </a>
+
+      <button class="mobile-menu-button" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="report.html" class="nav-link">Report Animal</a>
+        <a href="map.html" class="nav-link">Map</a>
+        <a href="community.html" class="nav-link active">Community</a>
+        <a href="adopt.html" class="nav-link">Adopt</a>
+        <a href="signin.html" class="nav-link">Sign In</a>
+        <a href="signup.html" class="nav-link">Sign Up</a>
+        <a href="profile.html" class="nav-link">Profile</a>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="report.html" class="mobile-nav-link">Report Animal</a>
+        <a href="map.html" class="mobile-nav-link">Map</a>
+        <a href="community.html" class="mobile-nav-link active">Community</a>
+        <a href="adopt.html" class="mobile-nav-link">Adopt</a>
+        <a href="signin.html" class="mobile-nav-link">Sign In</a>
+        <a href="signup.html" class="mobile-nav-link">Sign Up</a>
+        <a href="profile.html" class="mobile-nav-link">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="page-header">
+        <h1>PawRescue Community</h1>
+        <p>Connect with fellow animal lovers and rescuers</p>
+      </div>
+
+      <div class="community-tabs">
+        <button class="tab-button active" data-tab="feed">
+          <i class="fas fa-stream"></i> Feed
+        </button>
+        <button class="tab-button" data-tab="discussions">
+          <i class="fas fa-comments"></i> Discussions
+        </button>
+        <button class="tab-button" data-tab="resources">
+          <i class="fas fa-book"></i> Resources
+        </button>
+      </div>
+
+      <div class="community-layout">
+        <div class="community-main">
+          <!-- Feed Tab -->
+          <div id="feed" class="tab-content active">
+            <div class="create-post">
+              <div class="create-post-header">
+                <div class="create-post-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <input type="text" class="create-post-input" placeholder="Share something with the community...">
+              </div>
+              <div class="create-post-actions">
+                <div class="post-type-buttons">
+                  <button class="post-type-button">
+                    <i class="fas fa-image"></i> Photo
+                  </button>
+                  <button class="post-type-button">
+                    <i class="fas fa-file-alt"></i> Article
+                  </button>
+                </div>
+                <button class="primary-button">
+                  <i class="fas fa-paper-plane"></i> Post
+                </button>
+              </div>
+            </div>
+
+            <!-- Empty state for feed -->
+            <div class="empty-state">
+              <div class="empty-icon">
+                <i class="fas fa-comments"></i>
+              </div>
+              <h3 class="empty-title">No Posts Yet</h3>
+              <p class="empty-description">Be the first to share something with the community! Share your rescue
+                stories, ask for advice, or post photos of your furry friends.</p>
+              <button class="primary-button">
+                <i class="fas fa-plus"></i> Create a Post
+              </button>
+            </div>
+          </div>
+
+          <!-- Discussions Tab -->
+          <div id="discussions" class="tab-content">
+            <div class="empty-state">
+              <div class="empty-icon">
+                <i class="fas fa-comments"></i>
+              </div>
+              <h3 class="empty-title">Discussions Coming Soon</h3>
+              <p class="empty-description">Our discussion forums will be available soon! Join conversations about animal
+                care, rescue tips, and more.</p>
+              <button class="primary-button">
+                <i class="fas fa-bell"></i> Get Notified
+              </button>
+            </div>
+          </div>
+
+          <!-- Resources Tab -->
+          <div id="resources" class="tab-content">
+            <div class="empty-state">
+              <div class="empty-icon">
+                <i class="fas fa-book"></i>
+              </div>
+              <h3 class="empty-title">Resources Coming Soon</h3>
+              <p class="empty-description">Educational materials and resources about animal care, rescue procedures, and
+                adoption guides will be available soon!</p>
+              <button class="primary-button">
+                <i class="fas fa-bell"></i> Get Notified
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="community-sidebar">
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">
+              <i class="fas fa-calendar-alt"></i> Upcoming Events
+            </h3>
+            <div class="sidebar-empty">
+              <i class="far fa-calendar"></i>
+              <p>No upcoming events to display.</p>
+              <button class="primary-button" style="margin-top: 1rem; font-size: 0.875rem; padding: 0.5rem 1rem;">
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-section" style="margin-top: rem;">
+            <h3 class="sidebar-title">
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div>
+          <div class="footer-logo">
+            <i class="fas fa-paw footer-logo-icon"></i>
+            <span class="footer-logo-text">PawRescue</span>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-heading">Navigation</h4>
+            <ul>
+              <li><a href="index.html" class="footer-link">Home</a></li>
+              <li><a href="report.html" class="footer-link">Report Animal</a></li>
+              <li><a href="map.html" class="footer-link">Map</a></li>
+              <li><a href="community.html" class="footer-link">Community</a></li>
+              <li><a href="adopt.html" class="footer-link">Adopt</a></li>
+              <li><a href="profile.html" class="footer-link">Profile</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4 class="footer-heading">Contact Us</h4>
+            <div class="footer-contact">
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope contact-icon"></i>
+                <a href="mailto:info@pawrescue.org" class="footer-link">info@pawrescue.org</a>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <span>Baku, Azerbaijan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          <a href="terms.html" class="footer-link">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+  <script src="./js/community.js"></script>
+</body>
+
+</html>

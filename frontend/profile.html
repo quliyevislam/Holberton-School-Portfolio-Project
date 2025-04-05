@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - PawRescue</title>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/profile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="./assets/images/ico.svg">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-paw logo-icon"></i>
+        <span class="logo-text">PawRescue</span>
+      </a>
+      
+      <button class="mobile-menu-button" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="report.html" class="nav-link">Report Animal</a>
+        <a href="map.html" class="nav-link">Map</a>
+        <a href="community.html" class="nav-link">Community</a>
+        <a href="adopt.html" class="nav-link">Adopt</a>
+        <a href="signin.html" class="nav-link">Sign In</a>
+        <a href="signup.html" class="nav-link">Sign Up</a>
+        <a href="profile.html" class="nav-link active">Profile</a>
+      </div>
+      
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-nav-link">Home</a>
+        <a href="report.html" class="mobile-nav-link">Report Animal</a>
+        <a href="map.html" class="mobile-nav-link">Map</a>
+        <a href="community.html" class="mobile-nav-link">Community</a>
+        <a href="adopt.html" class="mobile-nav-link">Adopt</a>
+        <a href="signin.html" class="mobile-nav-link">Sign In</a>
+        <a href="signup.html" class="mobile-nav-link">Sign Up</a>
+        <a href="profile.html" class="mobile-nav-link active">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="profile-container">
+      <!-- Profile Header with User Information -->
+      <div class="profile-header">
+        <div class="profile-picture-container">
+          <img id="profilePicture" src="#" alt="#" class="profile-picture">
+          <div class="profile-picture-overlay" id="changePictureBtn">
+            Change Picture
+          </div>
+          <input type="file" id="pictureUpload" accept="image/*" style="display: none;">
+        </div>
+        
+        <div class="profile-info">
+          <h1 class="profile-name">Example</h1>
+          <div class="profile-contact">
+            <p>example@example.com</p>
+            <p>(+994) 12-345-6789</p>
+          </div>
+          
+          <div class="profile-actions">
+            <button class="edit-profile-button" id="editProfileBtn">Edit Profile</button>
+            <button class="logout-button">Logout</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Profile Tabs -->
+      <div class="profile-tabs">
+        <button class="tab-button active" data-tab="reports">My Reports</button>
+        <button class="tab-button" data-tab="posts">My Posts</button>
+        <button class="tab-button" data-tab="comments">My Comments</button>
+      </div>
+      
+      <!-- Reports Tab Content -->
+      <div id="reports" class="tab-content active">
+        <div class="empty-state">
+          <div class="empty-icon">📋</div>
+          <h3 class="empty-title">No Reports Yet</h3>
+          <p class="empty-description">You haven't submitted any animal reports yet.</p>
+          <a href="report.html" class="primary-button">Report an Animal</a>
+        </div>
+      </div>
+      
+      <!-- Posts Tab Content -->
+      <div id="posts" class="tab-content">
+        <div class="empty-state">
+          <div class="empty-icon">📝</div>
+          <h3 class="empty-title">No Posts Yet</h3>
+          <p class="empty-description">You haven't created any community posts yet.</p>
+          <a href="community.html" class="primary-button">Go to Community</a>
+        </div>
+      </div>
+      
+      <!-- Comments Tab Content -->
+      <div id="comments" class="tab-content">
+        <div class="empty-state">
+          <div class="empty-icon">💬</div>
+          <h3 class="empty-title">No Comments Yet</h3>
+          <p class="empty-description">You haven't commented on any community posts yet.</p>
+          <a href="community.html" class="primary-button">Browse Community</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Edit Profile Modal -->
+  <div class="edit-profile-modal" id="editProfileModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Profile</h2>
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+      </div>
+      
+      <form id="editProfileForm">
+        <div class="form-group">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" id="fullName" class="form-input" value="Sarah Johnson">
+        </div>
+        
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" class="form-input" value="sarah.johnson@example.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="phone" class="form-label">Phone</label>
+          <input type="tel" id="phone" class="form-input" value="(555) 123-4567">
+        </div>
+        
+        <div class="form-group">
+          <label for="currentPassword" class="form-label">Current Password</label>
+          <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password to confirm changes">
+        </div>
+        
+        <div class="form-group">
+          <label for="newPassword" class="form-label">New Password (leave blank to keep current)</label>
+          <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm New Password</label>
+          <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="cancel-button" id="cancelEditBtn">Cancel</button>
+          <button type="submit" class="save-button">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div>
+          <div class="footer-logo">
+            <i class="fas fa-paw footer-logo-icon"></i>
+            <span class="footer-logo-text">PawRescue</span>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-heading">Navigation</h4>
+            <ul>
+              <li><a href="index.html" class="footer-link">Home</a></li>
+              <li><a href="report.html" class="footer-link">Report Animal</a></li>
+              <li><a href="map.html" class="footer-link">Map</a></li>
+              <li><a href="community.html" class="footer-link">Community</a></li>
+              <li><a href="adopt.html" class="footer-link">Adopt</a></li>
+              <li><a href="profile.html" class="footer-link">Profile</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4 class="footer-heading">Contact Us</h4>
+            <div class="footer-contact">
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope contact-icon"></i>
+                <a href="mailto:info@pawrescue.org" class="footer-link">info@pawrescue.org</a>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <span>Baku, Azerbaijan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          <a href="terms.html" class="footer-link">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="./js/profile.js"></script>
+</body>
+</html>

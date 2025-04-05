@@ -1,0 +1,48 @@
+/* Retained styles for animal cards */
+.animal-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.animal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.animal-image {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.animal-details {
+    padding: 1rem;
+}
+
+.animal-type {
+    display: inline-block;
+    background-color: #EFF6FF;
+    color: #3B82F6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.animal-location {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.animal-time {
+    color: #6B7280;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
