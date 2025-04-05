@@ -61,7 +61,7 @@
         <h2>Recent Reports</h2>
         <p>These animals were recently reported in your area</p>
 
-        <div class="services-grid" style="margin-top: 1.5rem;">
+        <!-- <div class="services-grid" style="margin-top: 1.5rem;">
           <div class="animal-card">
             <h3>Enter here</h3>
           </div>
@@ -77,8 +77,11 @@
           <div class="animal-card">
             <h3>Ehter here</h3>
           </div>
-        </div>
+        </div> -->
       </div>
+    </div>
+    <div class="map-container">
+      <div id="googleMap" class="map"></div>
     </div>
   </main>
 
@@ -133,7 +136,9 @@
       </div>
     </div>
   </footer>
-
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"></script>
+  <script src="./js/map.js"></script>
   <script src="./js/script.js"></script>
 </body>
 
