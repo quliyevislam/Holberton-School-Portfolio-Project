@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Animal - PawRescue</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/ico.svg') }}">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="{{ url_for('main.index') }}" class="logo">
+        <i class="fas fa-paw logo-icon"></i>
+        <span class="logo-text">PawRescue</span>
+      </a>
+      
+      <button class="mobile-menu-button" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
+        <a href="{{ url_for('main.report') }}" class="nav-link active">Report Animal</a>
+        <a href="{{ url_for('main.map') }}" class="nav-link">Map</a>
+        <a href="{{ url_for('main.community') }}" class="nav-link">Community</a>
+        <a href="{{ url_for('main.adopt') }}" class="nav-link">Adopt</a>
+        <a href="{{ url_for('main.signin') }}" class="nav-link">Sign In</a>
+        <a href="{{ url_for('main.signup') }}" class="nav-link">Sign Up</a>
+        <a href="{{ url_for('main.profile') }}" class="nav-link">Profile</a>
+      </div>
+      
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="{{ url_for('main.index') }}" class="mobile-nav-link">Home</a>
+        <a href="{{ url_for('main.report') }}" class="mobile-nav-link active">Report Animal</a>
+        <a href="{{ url_for('main.map') }}" class="mobile-nav-link">Map</a>
+        <a href="{{ url_for('main.community') }}" class="mobile-nav-link">Community</a>
+        <a href="{{ url_for('main.adopt') }}" class="mobile-nav-link">Adopt</a>
+        <a href="{{ url_for('main.signin') }}" class="mobile-nav-link">Sign In</a>
+        <a href="{{ url_for('main.signup') }}" class="mobile-nav-link">Sign Up</a>
+        <a href="{{ url_for('main.profile') }}" class="mobile-nav-link">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+      <div class="page-header">
+        <h1>Animal Assessment Form</h1>
+      </div>
+
+      <form id="animalReportForm" class="assessment-form" method="POST" action="{{ url_for('submit_report') }}">
+        <!-- Reporter Information Section -->
+        <div class="form-section">
+          <h2 class="form-section-title">Your Information</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="required-field">Name</label>
+              <input id="name" type="text" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="contact" class="required-field">Contact Info</label>
+              <input id="contact" type="text" placeholder="Phone number or email" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animal Information Section -->
+        <div class="form-section">
+          <h2 class="form-section-title">Animal Information</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="animalType" class="required-field">Type of Animal</label>
+              <select id="animalType" required>
+                <option value="" disabled selected>Select animal type</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="otherAnimalType">If Other, please specify</label>
+              <input id="otherAnimalType" type="text" placeholder="Specify animal type">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="colorMarkings" class="required-field">Color & Markings</label>
+              <input id="colorMarkings" type="text" placeholder="E.g., Brown with white chest" required>
+            </div>
+            <div class="form-group">
+              <label for="age">Approximate Age</label>
+              <select id="age">
+                <option value="" disabled selected>Select age</option>
+                <option value="baby">Baby</option>
+                <option value="young">Young</option>
+                <option value="adult">Adult</option>
+                <option value="senior">Senior</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="healthStatus">Health Status</label>
+              <select id="healthStatus">
+                <option value="" disabled selected>Select health status</option>
+                <option value="healthy">Healthy</option>
+                <option value="injured">Injured</option>
+                <option value="malnourished">Malnourished</option>
+                <option value="sick">Sick</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="behavior">Behavior</label>
+              <select id="behavior">
+                <option value="" disabled selected>Select behavior</option>
+                <option value="friendly">Friendly</option>
+                <option value="aggressive">Aggressive</option>
+                <option value="scared">Scared</option>
+                <option value="weak">Weak</option>
+                <option value="unresponsive">Unresponsive</option>
+                <option value="unknown">Unknown</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="injuries">Visible Injuries or Illness</label>
+            <textarea id="injuries" placeholder="Describe any visible injuries, limping, bleeding, etc."></textarea>
+          </div>
+        </div>
+
+        <!-- Location and Time Section -->
+        <div class="form-section">
+          <h2 class="form-section-title">Location & Time</h2>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="location" class="required-field">Location Found</label>
+              <input id="location" type="text" placeholder="Enter exact location or address" required>
+            </div>
+            <div class="form-group">
+              <label for="dateFound" class="required-field">Date Found</label>
+              <input id="dateFound" type="date" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="timeFound">Time Found</label>
+            <input id="timeFound" type="time">
+          </div>
+        </div>
+
+        <!-- Additional Information Section - MOVED ABOVE PHOTO UPLOAD -->
+        <div class="form-section">
+          <h2 class="form-section-title">Additional Information</h2>
+          
+          <div class="form-group">
+            <textarea id="notes" placeholder="Any additional information that might help"></textarea>
+          </div>
+        </div>
+
+        <!-- Photo Upload Section -->
+        <div class="form-section">
+          <h2 class="form-section-title">Photo Upload</h2>
+          
+          <div class="form-group">
+            <label for="photo">Photo (helps rescuers assess the situation)</label>
+            <div id="uploadArea" class="upload-area">
+              <input id="photo" type="file" class="file-input" accept="image/*">
+              <div id="uploadPrompt" class="upload-prompt">
+                <div class="upload-icon">📷</div>
+                <p>Click to upload or drag and drop</p>
+                <p class="file-types">SVG, PNG or JPG (max. 5MB)</p>
+              </div>
+              <div id="imagePreview" class="image-preview" style="display: none;">
+                <img id="previewImg" src="{{ url_for('static', filename='assets/images/placeholder.svg') }}" alt="Preview">
+                <div class="image-overlay">
+                  <p>Click or drag to replace</p>
+                </div>
+              </div>
+              <div id="dragFileElement" class="drag-file-element" style="display: none;">
+                <p>Drop the file here</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button">Submit Report</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div>
+          <div class="footer-logo">
+            <i class="fas fa-paw footer-logo-icon"></i>
+            <span class="footer-logo-text">PawRescue</span>
+          </div>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-heading">Navigation</h4>
+            <ul>
+              <li><a href="{{ url_for('main.index') }}" class="footer-link">Home</a></li>
+              <li><a href="{{ url_for('main.report') }}" class="footer-link">Report Animal</a></li>
+              <li><a href="{{ url_for('main.map') }}" class="footer-link">Map</a></li>
+              <li><a href="{{ url_for('main.community') }}" class="footer-link">Community</a></li>
+              <li><a href="{{ url_for('main.adopt') }}" class="footer-link">Adopt</a></li>
+              <li><a href="{{ url_for('main.profile') }}" class="footer-link">Profile</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4 class="footer-heading">Contact Us</h4>
+            <div class="footer-contact">
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope contact-icon"></i>
+                <a href="mailto:info@pawrescue.org" class="footer-link">info@pawrescue.org</a>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <span>Baku, Azerbaijan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="{{ url_for('main.privacy') }}" class="footer-link">Privacy Policy</a>
+          <a href="{{ url_for('main.terms') }}" class="footer-link">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

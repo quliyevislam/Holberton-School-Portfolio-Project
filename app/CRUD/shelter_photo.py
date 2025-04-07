@@ -14,11 +14,12 @@ def get_photo_by_shelter_id(shelter_id):
     return photo
 
 def update_photo(id, shelter_id, photo):
-    photo = ShelterPhoto.query.filter_by(id=id).first()
-    photo.shelter_id = shelter_id
-    photo.photo = photo
-    db.session.commit()
-    return photo
+    photo_record = ShelterPhoto.query.filter_by(id=id).first()
+    if photo_record:
+        photo_record.shelter_id = shelter_id
+        photo_record.photo = photo
+        db.session.commit()
+    return photo_record
 
 def delete_photo(shelter_id):
     photo = ShelterPhoto.query.filter_by(shelter_id=shelter_id).first()

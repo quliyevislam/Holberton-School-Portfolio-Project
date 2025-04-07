@@ -1,4 +1,4 @@
-from app.models import db, ShelterAccount
+from app.models import db, ShelterAccount, Shelter
 
 def create_new_shelter_account(name, email, password, location_id=None):
     shelter_account = ShelterAccount(name=name, email=email, password=password)

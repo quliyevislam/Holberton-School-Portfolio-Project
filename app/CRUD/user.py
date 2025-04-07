@@ -4,9 +4,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def create_new_user(name, email, password, shelter_id=None):
+def create_new_user(first_name, last_name, email, password, shelter_id=None):
     hashed_password = generate_password_hash(password)
-    new_user = User(name=name, email=email, password=hashed_password, shelter_id=shelter_id)
+    new_user = User(first_name=first_name, last_name=last_name, email=email, password=hashed_password, shelter_id=shelter_id)
     db.session.add(new_user)
     db.session.commit()
 

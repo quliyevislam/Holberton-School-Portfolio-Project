@@ -5,11 +5,14 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
+from flask_login import LoginManager
+from flask_cors import CORS
 from config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
+login_manager = LoginManager()
 
 from app.CRUD.user import create_admin_user
 
@@ -21,6 +24,10 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "main.login"
+    login_manager.login_message = "Please log in to access this page."
+    CORS(app, supports_credentials=True)
 
     if not os.path.exists("logs"):
         os.mkdir("logs")
@@ -45,10 +52,6 @@ def create_app(config_class=Config):
     from app.errors import bp as errors_blueprint
 
     app.register_blueprint(errors_blueprint)
-
-    from app.api import bp as api_blueprint
-
-    app.register_blueprint(api_blueprint, url_prefix="/api")
 
     return app
 

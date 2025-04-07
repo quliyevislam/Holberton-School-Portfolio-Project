@@ -17,14 +17,6 @@ def get_location_by_id(id):
     location = Location.query.filter_by(id=id).first()
     return location
 
-def update_location(id, name, description, info):
-    location = Location.query.filter_by(id=id).first()
-    location.name = name
-    location.description = description
-    location.info = info
-    db.session.commit()
-    return location
-
 def update_location_by_id(id, name, description, info):
     location = Location.query.filter_by(id=id).first()
     if location:

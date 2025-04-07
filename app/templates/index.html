@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawRescue - Help Save Stray Animals</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/ico.svg') }}">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="{{ url_for('main.index') }}" class="logo">
+        <i class="fas fa-paw logo-icon"></i>
+        <span class="logo-text">PawRescue</span>
+      </a>
+
+      <button class="mobile-menu-button" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <div class="nav-links">
+        <a href="{{ url_for('main.index') }}" class="nav-link active">Home</a>
+        <a href="{{ url_for('main.report') }}" class="nav-link">Report Animal</a>
+        <a href="{{ url_for('main.map') }}" class="nav-link">Map</a>
+        <a href="{{ url_for('main.community') }}" class="nav-link">Community</a>
+        <a href="{{ url_for('main.adopt') }}" class="nav-link">Adopt</a>
+        <a href="{{ url_for('main.signin') }}" class="nav-link">Sign In</a>
+        <a href="{{ url_for('main.signup') }}" class="nav-link">Sign Up</a>
+        <a href="{{ url_for('main.profile') }}" class="nav-link">Profile</a>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="{{ url_for('main.index') }}" class="mobile-nav-link active">Home</a>
+        <a href="{{ url_for('main.report') }}" class="mobile-nav-link">Report Animal</a>
+        <a href="{{ url_for('main.map') }}" class="mobile-nav-link">Map</a>
+        <a href="{{ url_for('main.community') }}" class="mobile-nav-link">Community</a>
+        <a href="{{ url_for('main.adopt') }}" class="mobile-nav-link">Adopt</a>
+        <a href="{{ url_for('main.signin') }}" class="mobile-nav-link">Sign In</a>
+        <a href="{{ url_for('main.signup') }}" class="mobile-nav-link">Sign Up</a>
+        <a href="{{ url_for('main.profile') }}" class="mobile-nav-link">Profile</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h2 class="hero-title">Help Us to <span>Save Stray Animals</span></h2>
+        <p class="hero-subtitle">Join our mission to rescue, rehabilitate, and rehome stray animals in need. Together,
+          we can make a difference in their lives.</p>
+        <div class="hero-buttons">
+          <a href="{{ url_for('main.report') }}" class="btn btn-primary btn-lg btn-with-icon">
+            Report a Stray Animal <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="{{ url_for('main.adopt') }}" class="btn btn-primary btn-lg btn-with-icon">
+            Adopt an Animal <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="{{ url_for('static', filename='assets/images/cats.JPG') }}" alt="Dog and cat together" class="hero-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <div class="container">
+    <div class="features">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-map-marker-alt"></i>
+          </div>
+          <h3 class="feature-title">Report & Locate</h3>
+          <p class="feature-description">Easily report stray animals in your area and help us locate them quickly for
+            rescue.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-hands-helping"></i>
+          </div>
+          <h3 class="feature-title">Rescue & Rehabilitate</h3>
+          <p class="feature-description">Our team rescues animals and provides medical care, food, and shelter.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-home"></i>
+          </div>
+          <h3 class="feature-title">Adopt & Love</h3>
+          <p class="feature-description">Find your perfect companion and give a rescued animal a loving forever home.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">How You Can Help</h2>
+      <p class="section-subtitle">There are many ways to contribute to our mission and make a difference in the lives of
+        stray animals.</p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-image">
+            <img src="{{ url_for('static', filename='assets/images/white-cat.JPG') }}" alt="Report Animals">
+          </div>
+          <div class="service-content">
+            <h3 class="service-title">Report Animals</h3>
+            <p class="service-description">Found a stray animal? Report it to us and we'll help rescue it from the
+              streets.</p>
+            <a href="{{ url_for('main.report') }}" class="service-link">Report Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="{{ url_for('static', filename='assets/images/sleepy-cat.JPG') }}" alt="Find on Map">
+          </div>
+          <div class="service-content">
+            <h3 class="service-title">Find on Map</h3>
+            <p class="service-description">View reported animals on our interactive map and help with rescues in your
+              area.</p>
+            <a href="{{ url_for('main.map') }}" class="service-link">Open Map <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-image">
+            <img src="{{ url_for('static', filename='assets/images/cat.JPG') }}" alt="Join Community">
+          </div>
+          <div class="service-content">
+            <h3 class="service-title">Join Community</h3>
+            <p class="service-description">Connect with other animal lovers and participate in rescue events and
+              discussions.</p>
+            <a href="{{ url_for('main.community') }}" class="service-link">Join Now <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div>
+          <div class="footer-logo">
+            <i class="fas fa-paw footer-logo-icon"></i>
+            <span class="footer-logo-text">PawRescue</span>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-column">
+            <h4 class="footer-heading">Navigation</h4>
+            <ul>
+              <li><a href="{{ url_for('main.index') }}" class="footer-link">Home</a></li>
+              <li><a href="{{ url_for('main.report') }}" class="footer-link">Report Animal</a></li>
+              <li><a href="{{ url_for('main.map') }}" class="footer-link">Map</a></li>
+              <li><a href="{{ url_for('main.community') }}" class="footer-link">Community</a></li>
+              <li><a href="{{ url_for('main.adopt') }}" class="footer-link">Adopt</a></li>
+              <li><a href="{{ url_for('main.profile') }}" class="footer-link">Profile</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h4 class="footer-heading">Contact Us</h4>
+            <div class="footer-contact">
+              <div class="footer-contact-item">
+                <i class="fas fa-envelope contact-icon"></i>
+                <a href="mailto:info@pawrescue.org" class="footer-link">info@pawrescue.org</a>
+              </div>
+              <div class="footer-contact-item">
+                <i class="fas fa-map-marker-alt contact-icon"></i>
+                <span>Baku, Azerbaijan</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="{{ url_for('main.privacy') }}" class="footer-link">Privacy Policy</a>
+          <a href="{{ url_for('main.terms') }}" class="footer-link">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+
+</html>
