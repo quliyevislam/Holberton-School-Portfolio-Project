@@ -42,7 +42,7 @@ import logging
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from config import Config
-from google import genai
+# from google import genai
 import os
 
 logging.basicConfig(level=logging.DEBUG)
@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.config.from_object(Config)
-client = genai.Client(api_key=os.getenv("GOOGLE_GEMINI_API_KEY"))
+# client = genai.Client(api_key=os.getenv("GOOGLE_GEMINI_API_KEY"))
 
 
 @login_manager.user_loader
@@ -133,7 +133,7 @@ def signup():
 @main.route("/profile")
 @login_required
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html", user=current_user)
 
 
 @main.route("/privacy")
