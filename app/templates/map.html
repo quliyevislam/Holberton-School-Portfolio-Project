@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Map - PawRescue</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/map.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/ico.svg') }}">
+  <link rel="icon" type="image/png" href="./assets/images/ico.svg">
 </head>
 
 <body>
@@ -130,14 +130,17 @@
       <div class="container">
         <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
         <div class="footer-legal">
-          <a href="{{ url_for('main.privacy') }}" class="footer-link">Privacy Policy</a>
-          <a href="{{ url_for('main.terms') }}" class="footer-link">Terms of Service</a>
+          <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          <a href="terms.html" class="footer-link">Terms of Service</a>
         </div>
       </div>
     </div>
   </footer>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key={{google_map_key}}&callback=myMap"></script>
+  <script 
+    src="https://maps.googleapis.com/maps/api/js?key={{ google_map_key }}&callback=initMap" 
+    async 
+    defer>
+  </script>
   <script src="{{ url_for('static', filename='js/map.js') }}"></script>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
