@@ -144,3 +144,11 @@ def privacy():
 @main.route("/terms")
 def terms():
     return render_template("terms.html")
+
+
+@main.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("You have been logged out.", "success")
+    return redirect(url_for("main.index"))

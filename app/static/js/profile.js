@@ -125,6 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const logoutButton = document.querySelector('.logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function () {
+            window.location.href = '/logout';
+        });
+    }
+
     // Function to check for reports and render them
     function checkForReports() {
         const reports = JSON.parse(localStorage.getItem('animalReports') || '[]');
