@@ -449,6 +449,58 @@ button {
   gap: 0.75rem;
 }
 
+/* About Us Section */
+.about-us {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 4rem 2rem;
+  margin: 3rem 0;
+}
+
+.about-us-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-us-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-us-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.about-us-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+.about-us-text {
+  color: var(--gray);
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+.stat-label {
+  color: var(--gray-dark);
+  font-weight: 500;
+}
+
 /* Footer */
 .footer {
   background-color: var(--dark);
