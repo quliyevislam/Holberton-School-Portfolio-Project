@@ -51,19 +51,21 @@
 
   <main>
     <div class="container">
-      <div class="page-header">
+
+      <!-- Page Header -->
+      <div class="page-header fade-in">
         <h1>Adopt a Pet</h1>
       </div>
 
       <!-- Filters Section -->
-      <section class="filter-section">
+      <section class="filter-section slide-in">
         <button class="filter-toggle" id="filterToggle">
           <i class="fas fa-filter"></i> Show Filters
         </button>
 
         <div class="filter-container" id="filterContainer">
           <div class="filter-group">
-            <label for="animal-type" class="filter-label">Animal Type</label>
+            <label for="animal-type" class="filter-label">Animal</label>
             <select id="animal-type" class="filter-select">
               <option value="">All Animals</option>
               <option value="dog">Dogs</option>
@@ -135,7 +137,7 @@
       </section>
 
       <!-- Adoption Process -->
-      <section class="adoption-process">
+      <section class="adoption-process zoom-in">
         <h2>Our Adoption Process</h2>
         <div class="process-steps">
           <div class="process-step">
@@ -175,17 +177,66 @@
       </section>
 
       <!-- Report Cards Section -->
-      <section class="report-section">
+      <section class="report-section fade-in">
         <h2 class="section-title">All Reported Animals</h2>
         <div class="report-cards" id="reportCards">
-          <!-- Report cards will be injected here -->
+          <!-- Manually added cards -->
+          <div class="animal-card">
+            <img src="./assets/images/suprised-cat.jpg" alt="Animal 1" class="animal-image">
+            <div class="animal-details">
+              <span class="animal-type">Dog</span>
+              <h3>Lost Puppy</h3>
+              <div class="animal-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Central Park</span>
+              </div>
+              <div class="animal-time">Reported 2 hours ago</div>
+            </div>
+          </div>
+          <!--  -->
+          <div class="animal-card">
+            <img src="./assets/images/suprised-cat.jpg" alt="Animal 1" class="animal-image">
+            <div class="animal-details">
+              <span class="animal-type">Dog</span>
+              <h3>Lost Puppy</h3>
+              <div class="animal-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Central Park</span>
+              </div>
+              <div class="animal-time">Reported 2 hours ago</div>
+            </div>
+          </div>
+          <!--  -->
         </div>
       </section>
 
       <!-- Shelters Section -->
-      <section class="shelters-section">
+      <section class="shelters-section slide-in">
         <h2 class="section-title">Our Partner Shelters</h2>
         <div class="shelter-cards">
+          <!--  -->
+          <div class="shelter-card">
+            <div class="shelter-details">
+              <h3 class="shelter-name">PawRescue Main Shelter</h3>
+              <div class="shelter-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Rescue Street, Central Baku</span>
+              </div>
+            </div>
+            <a href="#" class="view-shelter">View Shelter</a>
+          </div>
+          <!--  -->
+          <div class="shelter-card">
+            <div class="shelter-details">
+              <h3 class="shelter-name">PawRescue Main Shelter</h3>
+              <div class="shelter-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Rescue Street, Central Baku</span>
+              </div>
+            </div>
+            <a href="#" class="view-shelter">View Shelter</a>
+          </div>
+          <!--  -->
           <div class="shelter-card">
             <div class="shelter-details">
               <h3 class="shelter-name">PawRescue Main Shelter</h3>
@@ -256,7 +307,24 @@
     <div class="back-to-top" id="backToTop">
       <i class="fas fa-arrow-up"></i>
     </div>
+    <div id="chat-overlay" class="chat-overlay">
+      <div class="chat-container">
+        <div class="chat-top-bar">
+          <h4>Chat with AI</h4> <!-- Updated text -->
+          <button class="close-chat">✖</button>
+        </div>
+        <div class="chat-box"></div>
+        <div class="input-container">
+          <textarea class="input-field" placeholder="Ask me something..."></textarea>
+          <div class="send-button">
+            <p>Send</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="ai-chat-button" title="Chat with AI">💬</button>
   <script src="./js/adopt.js"></script>
+  <script src="./js/chat.js"></script>
 </body>
 
 </html>

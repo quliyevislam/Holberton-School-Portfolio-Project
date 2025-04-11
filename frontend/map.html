@@ -48,40 +48,75 @@
     </div>
   </nav>
 
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-container">
+      <h1 class="hero-title">Discover & Help Stray Animals</h1>
+      <p class="hero-subtitle">Join our mission to rescue and care for animals in need.</p>
+      <a href="report.html" class="hero-button">Report an Animal</a>
+    </div>
+  </section>
+
   <main>
     <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
       <div class="page-header">
         <h1>Animal Location Map</h1>
         <p>Find stray animals in your area that need help</p>
-
       </div>
+    </div>
 
+    <div class="map-container">
+      <div id="googleMap" class="map"></div>
+    </div>
 
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
       <div class="recent-reports">
         <h2>Recent Reports</h2>
         <p>These animals were recently reported in your area</p>
-
-        <!-- <div class="services-grid" style="margin-top: 1.5rem;">
+        <div class="services-grid" style="margin-top: 1.5rem;">
+          <!-- animal-card -->
           <div class="animal-card">
-            <h3>Enter here</h3>
+            <img src="./assets/images/suprised-cat.jpg" alt="Animal 1" class="animal-image">
+            <div class="animal-details">
+              <span class="animal-type">Dog</span>
+              <h3>Lost Puppy</h3>
+              <div class="animal-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Central Park</span>
+              </div>
+              <div class="animal-time">Reported 2 hours ago</div>
+            </div>
           </div>
-
+          <!-- Add more animal cards as needed -->
           <div class="animal-card">
-            <h3>Enter here</h3>
+            <img src="./assets/images/suprised-cat.jpg" alt="Animal 1" class="animal-image">
+            <div class="animal-details">
+              <span class="animal-type">Dog</span>
+              <h3>Lost Puppy</h3>
+              <div class="animal-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Central Park</span>
+              </div>
+              <div class="animal-time">Reported 2 hours ago</div>
+            </div>
           </div>
-
+          <!-- animal-card -->
           <div class="animal-card">
-            <h3>Enter here</h3>
+            <img src="./assets/images/suprised-cat.jpg" alt="Animal 1" class="animal-image">
+            <div class="animal-details">
+              <span class="animal-type">Dog</span>
+              <h3>Lost Puppy</h3>
+              <div class="animal-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Central Park</span>
+              </div>
+              <div class="animal-time">Reported 2 hours ago</div>
+            </div>
           </div>
-
-          <div class="animal-card">
-            <h3>Ehter here</h3>
-          </div>
-        </div> -->
+          <!-- card -->
+           
+        </div>
       </div>
-    </div>
-    <div class="map-container">
-      <div id="googleMap" class="map"></div>
     </div>
   </main>
 
@@ -141,11 +176,27 @@
 <div class="back-to-top" id="backToTop">
   <i class="fas fa-arrow-up"></i>
 </div>
-  
+<div id="chat-overlay" class="chat-overlay">
+  <div class="chat-container">
+    <div class="chat-top-bar">
+      <h4>Chat with AI</h4> <!-- Updated text -->
+      <button class="close-chat">✖</button>
+    </div>
+    <div class="chat-box"></div>
+    <div class="input-container">
+      <textarea class="input-field" placeholder="Ask me something..."></textarea>
+      <div class="send-button">
+        <p>Send</p>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="ai-chat-button" title="Chat with AI">💬</button>
   <script
     src="https://maps.googleapis.com/maps/api/js?key=&callback=myMap"></script>
   <script src="./js/map.js"></script>
   <script src="./js/script.js"></script>
+  <script src="./js/chat.js"></script>
 </body>
 
 </html>

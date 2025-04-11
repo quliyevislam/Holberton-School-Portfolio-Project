@@ -81,12 +81,10 @@
               </div>
               <div class="create-post-actions">
                 <div class="post-type-buttons">
-                  <button class="post-type-button">
+                  <label class="post-type-button">
                     <i class="fas fa-image"></i> Photo
-                  </button>
-                  <button class="post-type-button">
-                    <i class="fas fa-file-alt"></i> Article
-                  </button>
+                    <input type="file" accept="image/*" style="display: none;">
+                  </label>
                 </div>
                 <button class="primary-button">
                   <i class="fas fa-paper-plane"></i> Post
@@ -94,17 +92,24 @@
               </div>
             </div>
 
-            <!-- Empty state for feed -->
-            <div class="empty-state">
-              <div class="empty-icon">
-                <i class="fas fa-comments"></i>
+            <!-- Example Post Cards -->
+            <div class="post-card">
+              <div class="post-header">
+                <strong>John Doe</strong> <span>2 hours ago</span>
               </div>
-              <h3 class="empty-title">No Posts Yet</h3>
-              <p class="empty-description">Be the first to share something with the community! Share your rescue
-                stories, ask for advice, or post photos of your furry friends.</p>
-              <button class="primary-button">
-                <i class="fas fa-plus"></i> Create a Post
-              </button>
+              <div class="post-content">
+                <p>Excited to join this community! Here's a picture of my rescue dog, Max!</p>
+                <img src="./assets/images/sleepy-cat.JPG" alt="Rescue Dog" class="post-image">
+              </div>
+            </div>
+            <!--  -->
+            <div class="post-card">
+              <div class="post-header">
+                <strong>Jane Smith</strong> <span>1 day ago</span>
+              </div>
+              <div class="post-content">
+                <p>Does anyone have tips for training a rescued cat? Any advice would be appreciated!</p>
+              </div>
             </div>
           </div>
 
@@ -115,7 +120,8 @@
                 <i class="fas fa-comments"></i>
               </div>
               <h3 class="empty-title">Discussions Coming Soon</h3>
-              <p class="empty-description">Our discussion forums will be available soon! Join conversations about animal
+              <p class="empty-description">Our discussion forums will be available soon! Join conversations about
+                animal
                 care, rescue tips, and more.</p>
               <button class="primary-button">
                 <i class="fas fa-bell"></i> Get Notified
@@ -130,7 +136,8 @@
                 <i class="fas fa-book"></i>
               </div>
               <h3 class="empty-title">Resources Coming Soon</h3>
-              <p class="empty-description">Educational materials and resources about animal care, rescue procedures, and
+              <p class="empty-description">Educational materials and resources about animal care, rescue procedures,
+                and
                 adoption guides will be available soon!</p>
               <button class="primary-button">
                 <i class="fas fa-bell"></i> Get Notified
@@ -138,26 +145,7 @@
             </div>
           </div>
         </div>
-
-        <div class="community-sidebar">
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">
-              <i class="fas fa-calendar-alt"></i> Upcoming Events
-            </h3>
-            <div class="sidebar-empty">
-              <i class="far fa-calendar"></i>
-              <p>No upcoming events to display.</p>
-              <button class="primary-button" style="margin-top: 1rem; font-size: 0.875rem; padding: 0.5rem 1rem;">
-              </button>
-            </div>
-          </div>
-
-          <div class="sidebar-section" style="margin-top: rem;">
-            <h3 class="sidebar-title">
-          </div>
-        </div>
       </div>
-    </div>
   </main>
 
   <!-- Footer -->
@@ -211,14 +199,30 @@
       </div>
     </div>
   </footer>
-  
+
   <!-- Back to Top Button -->
   <div class="back-to-top" id="backToTop">
     <i class="fas fa-arrow-up"></i>
   </div>
-
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-container">
+      <div class="chat-top-bar">
+        <h4>Chat with AI</h4> <!-- Updated text -->
+        <button class="close-chat">✖</button>
+      </div>
+      <div class="chat-box"></div>
+      <div class="input-container">
+        <textarea class="input-field" placeholder="Ask me something..."></textarea>
+        <div class="send-button">
+          <p>Send</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="ai-chat-button" title="Chat with AI">💬</button>
   <script src="./js/script.js"></script>
   <script src="./js/community.js"></script>
+  <script src="./js/chat.js"></script>
 </body>
 
 </html>

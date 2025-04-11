@@ -60,6 +60,8 @@
       </div>
 
       <form id="loginForm" class="auth-form">
+        <!-- Example error message -->
+        <!-- <div class="error-message">Invalid email or password. Please try again.</div> -->
         <div class="form-group">
           <label for="email">
             <i class="fas fa-envelope" style="color: var(--primary); margin-right: 8px;"></i>
@@ -160,8 +162,24 @@
 <div class="back-to-top" id="backToTop">
   <i class="fas fa-arrow-up"></i>
 </div>
-
+<div id="chat-overlay" class="chat-overlay">
+  <div class="chat-container">
+    <div class="chat-top-bar">
+      <h4>Chat with AI</h4> <!-- Updated text -->
+      <button class="close-chat">✖</button>
+    </div>
+    <div class="chat-box"></div>
+    <div class="input-container">
+      <textarea class="input-field" placeholder="Ask me something..."></textarea>
+      <div class="send-button">
+        <p>Send</p>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="ai-chat-button" title="Chat with AI">💬</button>
   <script src="./js/signin.js"> </script>
+  <script src="./js/chat.js"></script>
 </body>
 
 </html>

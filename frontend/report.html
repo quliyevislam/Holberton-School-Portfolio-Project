@@ -47,12 +47,13 @@
   </nav>
 
   <main>
-    <div class="container" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+    <div class="container fade-in" style="max-width: 800px; margin: 0 auto; padding: 2rem;">
       <div class="page-header">
-        <h1>Animal Assessment Form</h1>
+        <h1 class="page-title">Animal Assessment Form</h1>
+        <p class="page-subtitle">Help us rescue stray animals by providing detailed information.</p>
       </div>
 
-      <form id="animalReportForm" class="assessment-form">
+      <form id="animalReportForm" class="assessment-form slide-in">
         <!-- Reporter Information Section -->
         <div class="form-section">
           <h2 class="form-section-title">Your Information</h2>
@@ -160,7 +161,7 @@
           </div>
         </div>
 
-        <!-- Additional Information Section - MOVED ABOVE PHOTO UPLOAD -->
+        <!-- Additional Information Section -->
         <div class="form-section">
           <h2 class="form-section-title">Additional Information</h2>
           
@@ -195,7 +196,7 @@
           </div>
         </div>
 
-        <button type="submit" class="submit-button">Submit Report</button>
+        <button type="submit" class="submit-button zoom-in">Submit Report</button>
       </form>
     </div>
   </main>
@@ -256,7 +257,23 @@
 <div class="back-to-top" id="backToTop">
   <i class="fas fa-arrow-up"></i>
 </div>
-
+<div id="chat-overlay" class="chat-overlay">
+  <div class="chat-container">
+    <div class="chat-top-bar">
+      <h4>Chat with AI</h4> <!-- Updated text -->
+      <button class="close-chat">✖</button>
+    </div>
+    <div class="chat-box"></div>
+    <div class="input-container">
+      <textarea class="input-field" placeholder="Ask me something..."></textarea>
+      <div class="send-button">
+        <p>Send</p>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="ai-chat-button" title="Chat with AI">💬</button>
   <script src="./js/report.js"> </script>
+  <script src="./js/chat.js"></script>
 </body>
 </html>

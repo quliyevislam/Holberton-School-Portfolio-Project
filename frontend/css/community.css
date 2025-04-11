@@ -1,6 +1,7 @@
 /* Tabs */
 .community-tabs {
     display: flex;
+    justify-content: center; /* Center the tabs */
     border-bottom: 1px solid #E5E7EB;
     margin-bottom: 2rem;
     overflow-x: auto;
@@ -72,13 +73,33 @@
   
   /* Layout */
   .community-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2rem;
+    display: block; /* Change from grid to block layout */
+    gap: 0; /* Remove gap since there's no sidebar */
+  }
+
+  .community-main {
+    width: 100%; /* Make the main content take full width */
   }
   
   /* Cards */
-  .post-card, .event-card, .community-sidebar, .create-post, .empty-state {
+  .post-card {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .post-card img.post-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .event-card, .community-sidebar, .create-post, .empty-state {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
@@ -248,4 +269,175 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .user-message {
+    background-color: var(--primary-light);
+    color: var(--dark);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    align-self: flex-end; /* Stick to the right */
+    max-width: 100%; /* Extend the message width fully */
+    word-wrap: break-word;
+    text-align: left; /* Ensure content starts from the left */
+  }
+  
+  .ai-message {
+    background-color: var(--gray-light);
+    color: var(--dark);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    align-self: flex-start; /* Stick to the left */
+    max-width: 100%; /* Extend the message width fully */
+    word-wrap: break-word;
+    text-align: left; /* Ensure content starts from the left */
+  }
+  
+  /* Loading Indicator */
+  .loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .loading-indicator::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--primary-light);
+    border-top: 3px solid var(--primary-dark);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Header */
+  .page-header {
+    text-align: center; /* Center the header */
+    color: #1D4ED8; /* Set text color to blue */
+    margin-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem; /* Adjust font size for better visibility */
+    font-weight: 700; /* Make the header bold */
+  }
+
+  .page-header p {
+    font-size: 1rem; /* Adjust subtitle font size */
+    color: #2563EB; /* Slightly lighter blue for the subtitle */
+  }
+
+  /* Navigation Links */
+  .nav-links {
+    display: flex;
+    justify-content: center; /* Center the navigation links */
+    gap: 1.5rem; /* Add spacing between links */
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .hero-title {
+      font-size: 3rem;
+    }
+  
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .section {
+      padding: 4rem 0;
+    }
+  
+    .section-title {
+      font-size: 2rem;
+    }
+  
+    .hero {
+      padding: 4rem 0;
+    }
+  
+    .hero-container {
+      flex-direction: column;
+      gap: 3rem;
+    }
+  
+    .hero-content {
+      text-align: center;
+    }
+  
+    .hero-buttons {
+      justify-content: center;
+    }
+  
+    .hero-title {
+      font-size: 2.5rem;
+    }
+  
+    .nav-links {
+      display: none;
+    }
+  
+    .mobile-menu-button {
+      display: block;
+    }
+  
+    .mobile-menu {
+      display: flex;
+    }
+  
+    .footer-links {
+      flex-direction: column;
+    }
+  
+    .footer-legal {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  
+    .chat-container {
+      height: 90vh; /* Extend height for smaller screens */
+    }
+  
+    .chat-box {
+      max-height: calc(90vh - 120px); /* Adjust height dynamically */
+    }
+  
+    .input-container {
+      flex-direction: column; /* Stack input and send button */
+      gap: 10px;
+    }
+  
+    .input-field {
+      margin-right: 0; /* Remove margin for stacked layout */
+    }
+  
+    .send-button {
+      width: 100%; /* Full width for send button */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+  
+    .features-grid,
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
   }

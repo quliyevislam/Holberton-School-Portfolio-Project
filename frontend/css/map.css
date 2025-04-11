@@ -1,19 +1,21 @@
 /* Retained styles for animal cards */
 .animal-card {
-    background-color: white;
+    background-color: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .map-container {
-    background-color: white;
+    background-color: #f0f4f8;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 5% 4.5%;
+    padding: 1rem;
     border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .map {
@@ -24,14 +26,24 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Style for custom map marker icons */
+.custom-marker-icon {
+    border-radius: 50%; /* Make the icon circular */
+    overflow: hidden; /* Ensure the image fits within the circle */
+    width: 50px; /* Set a fixed width */
+    height: 50px; /* Set a fixed height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    border: 2px solid #ffffff; /* Optional: Add a white border */
+}
+
 .animal-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .animal-image {
-    height: 180px;
     width: 100%;
+    height: 180px;
     object-fit: cover;
 }
 
@@ -63,3 +75,205 @@
     font-size: 0.75rem;
     margin-top: 0.5rem;
 }
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(to right, #4facfe, #00f2fe); /* Cool and calming gradient */
+    color: #ffffff; /* White text for contrast */
+    text-align: center;
+    padding: 3rem 1.5rem; /* Maintain reduced padding */
+    margin: 1.5rem 2rem; /* Add left and right margins */
+    border-radius: 8px;
+}
+
+.hero-title {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-button {
+    background-color: #ffffff;
+    color: #4facfe; /* Match button text color with gradient */
+    padding: 0.5rem 1.25rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #4facfe; /* Match hover background with gradient */
+    color: #ffffff;
+}
+
+/* Recent Reports Section */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.user-message {
+    background-color: var(--primary-light);
+    color: var(--dark);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    align-self: flex-end; /* Stick to the right */
+    max-width: 100%; /* Extend the message width fully */
+    word-wrap: break-word;
+    text-align: left; /* Ensure content starts from the left */
+  }
+  
+  .ai-message {
+    background-color: var(--gray-light);
+    color: var(--dark);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    align-self: flex-start; /* Stick to the left */
+    max-width: 100%; /* Extend the message width fully */
+    word-wrap: break-word;
+    text-align: left; /* Ensure content starts from the left */
+  }
+  
+  /* Loading Indicator */
+  .loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .loading-indicator::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--primary-light);
+    border-top: 3px solid var(--primary-dark);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Center-align page header and recent reports */
+  .page-header {
+      text-align: center;
+  }
+  
+  .recent-reports {
+      text-align: center;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 1024px) {
+    .hero-title {
+      font-size: 3rem;
+    }
+  
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .section {
+      padding: 4rem 0;
+    }
+  
+    .section-title {
+      font-size: 2rem;
+    }
+  
+    .hero {
+      padding: 4rem 0;
+    }
+  
+    .hero-container {
+      flex-direction: column;
+      gap: 3rem;
+    }
+  
+    .hero-content {
+      text-align: center;
+    }
+  
+    .hero-buttons {
+      justify-content: center;
+    }
+  
+    .hero-title {
+      font-size: 2rem;
+    }
+  
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+  
+    .nav-links {
+      display: none;
+    }
+  
+    .mobile-menu-button {
+      display: block;
+    }
+  
+    .mobile-menu {
+      display: flex;
+    }
+  
+    .footer-links {
+      flex-direction: column;
+    }
+  
+    .footer-legal {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: center;
+    }
+  
+    .chat-container {
+      height: 90vh; /* Extend height for smaller screens */
+    }
+  
+    .chat-box {
+      max-height: calc(90vh - 120px); /* Adjust height dynamically */
+    }
+  
+    .input-container {
+      flex-direction: column; /* Stack input and send button */
+      gap: 10px;
+    }
+  
+    .input-field {
+      margin-right: 0; /* Remove margin for stacked layout */
+    }
+  
+    .send-button {
+      width: 100%; /* Full width for send button */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+  
+    .features-grid,
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+  }

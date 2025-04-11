@@ -49,15 +49,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderReportCards() {
       const reports = JSON.parse(localStorage.getItem('animalReports') || '[]');
       const reportCardsContainer = document.getElementById('reportCards');
-      reportCardsContainer.innerHTML = '';
-      
+
+      // Only clear dynamically added cards, not manually added ones
+      const dynamicCards = reportCardsContainer.querySelectorAll('.report-card');
+      dynamicCards.forEach(card => card.remove());
+
       if (reports.length === 0) {
-        reportCardsContainer.innerHTML = '<p>No reports submitted yet.</p>';
-        return;
+        return; // Do nothing if no reports exist
       }
-      
+
       reports.forEach(report => {
-        // Create a report card element
         const card = document.createElement('div');
         card.className = 'report-card';
         card.innerHTML = `
@@ -76,23 +77,36 @@ document.addEventListener('DOMContentLoaded', function() {
     
     renderReportCards();
 
-      // Back to top button
-  const backToTopButton = document.getElementById('backToTop');
-  
-  if (backToTopButton) {
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 300) {
-        backToTopButton.classList.add('visible');
-      } else {
-        backToTopButton.classList.remove('visible');
-      }
-    });
+    // Back to top button
+    const backToTopButton = document.getElementById('backToTop');
     
-    backToTopButton.addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    if (backToTopButton) {
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add('visible');
+        } else {
+          backToTopButton.classList.remove('visible');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Scroll animation for sections
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
       });
     });
-  }
-  });
+
+    document.querySelectorAll('.fade-in, .slide-in, .zoom-in').forEach((section) => {
+      observer.observe(section);
+    });
+});

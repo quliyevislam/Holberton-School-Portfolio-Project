@@ -103,9 +103,8 @@
       <div id="comments" class="tab-content">
         <div class="empty-state">
           <div class="empty-icon">💬</div>
-          <h3 class="empty-title">No Comments Yet</h3>
-          <p class="empty-description">You haven't commented on any community posts yet.</p>
-          <a href="community.html" class="primary-button">Browse Community</a>
+          <h3 class="empty-title">Coming Soon</h3>
+          <p class="empty-description">The comments section is under development and will be available soon.</p>
         </div>
       </div>
     </div>
@@ -214,7 +213,23 @@
   <div class="back-to-top" id="backToTop">
     <i class="fas fa-arrow-up"></i>
   </div>
-
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-container">
+      <div class="chat-top-bar">
+        <h4>Chat with AI</h4> <!-- Updated text -->
+        <button class="close-chat">✖</button>
+      </div>
+      <div class="chat-box"></div>
+      <div class="input-container">
+        <textarea class="input-field" placeholder="Ask me something..."></textarea>
+        <div class="send-button">
+          <p>Send</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="ai-chat-button" title="Chat with AI">💬</button>
   <script src="./js/profile.js"></script>
+  <script src="./js/chat.js"></script>
 </body>
 </html>

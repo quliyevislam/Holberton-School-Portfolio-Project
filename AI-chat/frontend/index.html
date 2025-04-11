@@ -6,6 +6,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>AI Chat Bot</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f9;
+        }
+
+        .chat-container {
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            min-height: 300px;
+            max-height: 500px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 12px;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            background-color: #daf8e3;
+            align-self: flex-end;
+        }
+
+        .ai-message {
+            background-color: #e8eaf6;
+            align-self: flex-start;
+        }
+
+        .input-container {
+            display: flex;
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .input-field {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            margin-right: 10px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        .send-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .send-button p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .send-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Loading Indicator Styles */
+        .loading-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            background-color: #f0f0f0;
+            border-radius: 12px;
+            align-self: center;
+        }
+
+        .loading-indicator::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid #ccc;
+            border-top-color: #333;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -21,7 +142,79 @@
             </div>
         </div>
     </main>
-<script src="./index.js"></script>
+    <script>
+
+const chatBox = document.querySelector('.chat-box');
+const sendButton = document.querySelector('.send-button');
+const inputField = document.querySelector('.input-field');
+
+
+sendButton.addEventListener('click', (event) => {
+    const userInput = inputField.value.trim();
+
+    if (!userInput) {
+        return;
+    }
+
+    const jsonData = {
+        "message": userInput
+    };
+
+    inputField.value = '';
+
+    const userMessage = document.createElement('div');
+    const pUser = document.createElement('p');
+
+    userMessage.classList.add('chat-message');
+    userMessage.classList.add('user-message');
+    userMessage.appendChild(pUser);
+
+    pUser.textContent = userInput;
+    chatBox.appendChild(userMessage);
+
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.classList.add('loading-indicator');
+    chatBox.appendChild(loadingIndicator);
+
+    fetch('http://0.0.0.0:5000/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(jsonData)
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (result) {
+            chatBox.removeChild(loadingIndicator);
+
+            const aiMessage = document.createElement('div');
+            const pAi = document.createElement('p');
+
+            aiMessage.classList.add('chat-message');
+            aiMessage.classList.add('ai-message');
+            aiMessage.appendChild(pAi);
+
+            result = result.replaceAll('**', '<br>');
+            result = result.replaceAll('*', '');
+
+            pAi.innerHTML = result
+            chatBox.appendChild(aiMessage);
+
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+            chatBox.removeChild(loadingIndicator);
+        });
+});
+
+    </script>
 </body>
 
 </html>
+
+
+
+
