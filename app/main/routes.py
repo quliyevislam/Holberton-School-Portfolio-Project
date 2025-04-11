@@ -62,6 +62,10 @@ def load_user(user_id):
 def index():
     return render_template("index.html")
 
+@main.route("/welcome")
+def welcome():
+    return render_template("welcome.html")
+
 
 @main.route("/report")
 def report():

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PawRescue - Help Save Stray Animals</title>
+  <title>Welcome to PawRescue</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/images/ico.svg') }}">
@@ -24,21 +24,23 @@
       </button>
 
       <div class="nav-links">
-        <a href="{{ url_for('main.index') }}" class="nav-link active">Home</a>
+        <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
         <a href="{{ url_for('main.report') }}" class="nav-link">Report Animal</a>
         <a href="{{ url_for('main.map') }}" class="nav-link">Map</a>
         <a href="{{ url_for('main.community') }}" class="nav-link">Community</a>
         <a href="{{ url_for('main.adopt') }}" class="nav-link">Adopt</a>
-        <a href="{{ url_for('main.profile') }}" class="nav-link">Profile</a>
+        <a href="{{ url_for('main.signin') }}" class="nav-link">Login</a>
+        <a href="{{ url_for('main.signup') }}" class="nav-link">Signup</a>
       </div>
 
       <div class="mobile-menu" id="mobileMenu">
-        <a href="{{ url_for('main.index') }}" class="mobile-nav-link active">Home</a>
+        <a href="{{ url_for('main.index') }}" class="mobile-nav-link">Home</a>
         <a href="{{ url_for('main.report') }}" class="mobile-nav-link">Report Animal</a>
         <a href="{{ url_for('main.map') }}" class="mobile-nav-link">Map</a>
         <a href="{{ url_for('main.community') }}" class="mobile-nav-link">Community</a>
         <a href="{{ url_for('main.adopt') }}" class="mobile-nav-link">Adopt</a>
-        <a href="{{ url_for('main.profile') }}" class="mobile-nav-link">Profile</a>
+        <a href="{{ url_for('main.signin') }}" class="mobile-nav-link">Login</a>
+        <a href="{{ url_for('main.signup') }}" class="mobile-nav-link">Signup</a>
       </div>
     </div>
   </nav>
@@ -47,7 +49,7 @@
   <section class="hero">
     <div class="container hero-container">
       <div class="hero-content">
-        <h2 class="hero-title">Help Us to <span>Save Stray Animals</span></h2>
+        <h2 class="hero-title">Welcome to <span>PawRescue</span></h2>
         <p class="hero-subtitle">Join our mission to rescue, rehabilitate, and rehome stray animals in need. Together,
           we can make a difference in their lives.</p>
         <div class="hero-buttons">
@@ -166,7 +168,8 @@
               <li><a href="{{ url_for('main.map') }}" class="footer-link">Map</a></li>
               <li><a href="{{ url_for('main.community') }}" class="footer-link">Community</a></li>
               <li><a href="{{ url_for('main.adopt') }}" class="footer-link">Adopt</a></li>
-              <li><a href="{{ url_for('main.profile') }}" class="footer-link">Profile</a></li>
+              <li><a href="{{ url_for('main.signin') }}" class="footer-link">Login</a></li>
+              <li><a href="{{ url_for('main.signup') }}" class="footer-link">Signup</a></li>
             </ul>
           </div>
 
