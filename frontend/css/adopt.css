@@ -373,27 +373,9 @@
   z-index: 2;
 }
 
-.process-step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 40px);
-  right: calc(-50% + 10px);
-  height: 3px;
-  background-color: #E5E7EB;
-  z-index: 1;
-}
 
-.process-step:nth-child(3)::after {
-  content: '';
-  position: absolute;
-  top: 25px;
-  left: calc(50% + 40px);
-  right: calc(-10% + 10px);
-  height: 3px;
-  background-color: #E5E7EB;
-  z-index: 1;
-}
+
+
 
 .step-title {
   font-weight: 600;

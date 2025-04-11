@@ -104,16 +104,6 @@
           </div>
 
           <div class="filter-group">
-            <label for="size" class="filter-label">Size</label>
-            <select id="size" class="filter-select">
-              <option value="">Any Size</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
             <label for="status" class="filter-label">Status</label>
             <select id="status" class="filter-select">
               <option value="">Any Status</option>
@@ -175,17 +165,48 @@
       </section>
 
       <!-- Report Cards Section -->
-      <section class="report-section">
-        <h2 class="section-title">All Reported Animals</h2>
-        <div class="report-cards" id="reportCards">
-          <!-- Report cards will be injected here -->
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+        <div class="recent-reports">
+          <h2 class="section-title">Recent Reports</h2>
+          <p class="section-subtitle">These animals were recently reported</p>
+          <div class="services-grid" style="margin-top: 1.5rem;">
+            <!-- animal-card -->
+            <div class="animal-card">
+              <img src="./assets/images/lost-dog.JPG" alt="Animal 1" class="animal-image">
+              <div class="animal-details">
+                <span class="animal-type">Dog</span>
+                <h3>Lost Puppy</h3>
+                <div class="animal-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Central Park</span>
+                </div>
+                <div class="animal-time">Reported 2 hours ago</div>
+              </div>
+            </div>
+            <!-- Add more animal cards as needed -->
+            <div class="animal-card">
+              <img src="./assets/images/lost-cat.JPG" alt="Animal 1" class="animal-image">
+              <div class="animal-details">
+                <span class="animal-type">Cat</span>
+                <h3>Lost Cat</h3>
+                <div class="animal-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Khatai metro Station</span>
+                </div>
+                <div class="animal-time">Reported 30 minutes ago</div>
+              </div>
+            </div>        
+          </div>
         </div>
-      </section>
+      </div>
+    
 
-      <!-- Shelters Section -->
-      <section class="shelters-section">
-        <h2 class="section-title">Our Partner Shelters</h2>
+
+      <!-- Shelters and Vet Section -->
+      <section class="shelters-section slide-in">
+        <h2 class="section-title">Our Partners</h2>
         <div class="shelter-cards">
+          <!--  -->
           <div class="shelter-card">
             <div class="shelter-details">
               <h3 class="shelter-name">PawRescue Main Shelter</h3>
@@ -195,6 +216,28 @@
               </div>
             </div>
             <a href="#" class="view-shelter">View Shelter</a>
+          </div>
+          <!--  -->
+          <div class="shelter-card">
+            <div class="shelter-details">
+              <h3 class="shelter-name">PetCare Shelter</h3>
+              <div class="shelter-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Rescue Street, Central Baku</span>
+              </div>
+            </div>
+            <a href="#" class="view-shelter">View Shelter</a>
+          </div>
+          <!--  -->
+          <div class="shelter-card">
+            <div class="shelter-details">
+              <h3 class="shelter-name">Caspian Vet </h3>
+              <div class="shelter-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Rescue Street, Central Baku</span>
+              </div>
+            </div>
+            <a href="#" class="view-shelter">View Clinic</a>
           </div>
         </div>
       </section>
