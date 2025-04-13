@@ -7,6 +7,7 @@
   <title>Community - PawRescue</title>
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/community.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="./assets/images/ico.svg">
 </head>
 
@@ -51,7 +52,7 @@
   <main>
     <div class="container">
       <div class="page-header">
-        <h1>PawRescue Community</h1>
+        <h1 class="section-title">PawRescue Community</h1>
         <p>Connect with fellow animal lovers, share stories, and learn from each other</p>
       </div>
 
@@ -452,219 +453,8 @@
     <i class="fas fa-arrow-up"></i>
   </div>
 
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Set current year in footer
-      document.getElementById('currentYear').textContent = new Date().getFullYear();
-      
-      // Mobile menu toggle
-      const menuToggle = document.getElementById('menuToggle');
-      const mobileMenu = document.getElementById('mobileMenu');
-      
-      if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', function() {
-          mobileMenu.classList.toggle('open');
-        });
-      }
-      
-      // Tab switching
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          tabContents.forEach(content => content.classList.remove('active'));
-          this.classList.add('active');
-          const tabId = this.getAttribute('data-tab');
-          document.getElementById(tabId).classList.add('active');
-        });
-      });
-      
-      // Back to top button
-      const backToTopButton = document.getElementById('backToTop');
-      if (backToTopButton) {
-        window.addEventListener('scroll', function() {
-          if (window.pageYOffset > 300) {
-            backToTopButton.classList.add('visible');
-          } else {
-            backToTopButton.classList.remove('visible');
-          }
-        });
-        backToTopButton.addEventListener('click', function() {
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        });
-      }
-
-      // Make Post & Photo buttons functional for Feed
-      const createPostInput = document.querySelector('#feed .create-post-input');
-      const postButton = document.querySelector('#feed .primary-button');
-      const photoButton = document.querySelector('#feed .post-type-button');
-
-      // Create a hidden file input for photo uploads in Feed
-      const photoInput = document.createElement('input');
-      photoInput.type = 'file';
-      photoInput.accept = 'image/*';
-      photoInput.style.display = 'none';
-      document.body.appendChild(photoInput);
-
-      let selectedImageURL = null;
-
-      // When Photo button is clicked, trigger file selection
-      photoButton.addEventListener('click', function() {
-        photoInput.click();
-      });
-
-      // When a file is selected, read it to display in the post
-      photoInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            selectedImageURL = e.target.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-
-      // Create a new post when Post button is clicked
-      postButton.addEventListener('click', function() {
-        const postText = createPostInput.value.trim();
-        if (!postText && !selectedImageURL) {
-          alert("Please enter some text or choose a photo.");
-          return;
-        }
-
-        const postContainer = document.createElement('div');
-        postContainer.classList.add('post');
-
-        let imageHTML = '';
-        if (selectedImageURL) {
-          imageHTML = `
-            <div class="post-image">
-              <img src="${selectedImageURL}" alt="Posted image">
-            </div>
-          `;
-        }
-        postContainer.innerHTML = `
-          <div class="post-header">
-            <div class="post-avatar">
-              <img src="./assets/images/pfp.png" alt="User avatar">
-            </div>
-            <div class="post-meta">
-              <div class="post-author">You</div>
-              <div class="post-time">Just now</div>
-            </div>
-          </div>
-          <div class="post-content">
-            <p class="post-text">${postText}</p>
-            ${imageHTML}
-          </div>
-          <div class="post-actions">
-            <div class="post-action">
-              <i class="far fa-heart"></i>
-              <span>0 Likes</span>
-            </div>
-            <div class="post-action">
-              <i class="far fa-comment"></i>
-              <span>0 Comments</span>
-            </div>
-            <div class="post-action">
-              <i class="far fa-share-square"></i>
-              <span>Share</span>
-            </div>
-          </div>
-        `;
-
-        const feedContainer = document.getElementById('feed');
-        feedContainer.insertBefore(postContainer, feedContainer.children[1]);
-        createPostInput.value = '';
-        selectedImageURL = null;
-        photoInput.value = null;
-      });
-
-      // Discussion Section Handlers
-      const discussionSection = document.querySelector('#discussions .create-post');
-      const discussionInput = discussionSection.querySelector('.create-post-input');
-      const addTopicButton = discussionSection.querySelector('.post-type-button');
-      const createDiscussionButton = discussionSection.querySelector('.primary-button');
-      
-      let selectedTopic = '';
-
-      addTopicButton.addEventListener('click', function() {
-        const topic = prompt("Enter discussion topic:");
-        if (topic) {
-          selectedTopic = topic;
-          addTopicButton.innerHTML = `<i class="fas fa-tag"></i> ${topic}`;
-        }
-      });
-
-      createDiscussionButton.addEventListener('click', function() {
-        const discussionText = discussionInput.value.trim();
-        if (!discussionText) {
-          alert("Please enter discussion text.");
-          return;
-        }
-        const discussionItem = document.createElement('div');
-        discussionItem.classList.add('discussion-item');
-        discussionItem.innerHTML = `
-          <div class="discussion-header">
-            <h3 class="discussion-title">${discussionText}</h3>
-            <span class="discussion-category">${selectedTopic || "General"}</span>
-          </div>
-          <div class="discussion-meta">
-            <div class="discussion-meta-item">
-              <i class="far fa-user"></i>
-              <span>Started by You</span>
-            </div>
-            <div class="discussion-meta-item">
-              <i class="far fa-comment"></i>
-              <span>0 replies</span>
-            </div>
-            <div class="discussion-meta-item">
-              <i class="far fa-clock"></i>
-              <span>Just now</span>
-            </div>
-          </div>
-        `;
-
-        const discussionList = document.querySelector('#discussions .discussion-list');
-        discussionList.insertBefore(discussionItem, discussionList.firstChild);
-        discussionInput.value = '';
-        selectedTopic = '';
-        addTopicButton.innerHTML = `<i class="fas fa-tag"></i> Add Topic`;
-      });
-
-
-      // Like Handlers (Toggle Like)
-
-      document.addEventListener('click', function(event) {
-        const action = event.target.closest('.post-action');
-        if (!action) return;
-        
-        const heartIcon = action.querySelector('i');
-        if (heartIcon && heartIcon.classList.contains('fa-heart')) {
-          const span = action.querySelector('span');
-          let count = parseInt(span.textContent) || 0;
-          
-          // Toggle like
-          if (action.classList.contains('liked')) {
-            action.classList.remove('liked');
-            count = Math.max(count - 1, 0);
-          } else {
-            action.classList.add('liked');
-            count++;
-          }
-          span.textContent = `${count} Likes`;
-        }
-      });
-
-    });
-  </script>
+  <script src="./js/script.js"></script>
+  <script src="./js/community.js"></script>
 </body>
 
 </html>
