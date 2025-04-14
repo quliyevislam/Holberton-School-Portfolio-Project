@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="./assets/images/ico.svg">
 </head>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar">
@@ -17,11 +19,11 @@
         <i class="fas fa-paw logo-icon"></i>
         <span class="logo-text">PawRescue</span>
       </a>
-      
+
       <button class="mobile-menu-button" id="menuToggle">
         <i class="fas fa-bars"></i>
       </button>
-      
+
       <div class="nav-links">
         <a href="index.html" class="nav-link">Home</a>
         <a href="report.html" class="nav-link">Report Animal</a>
@@ -32,7 +34,7 @@
         <a href="signup.html" class="nav-link">Sign Up</a>
         <a href="profile.html" class="nav-link active">Profile</a>
       </div>
-      
+
       <div class="mobile-menu" id="mobileMenu">
         <a href="index.html" class="mobile-nav-link">Home</a>
         <a href="report.html" class="mobile-nav-link">Report Animal</a>
@@ -57,28 +59,28 @@
           </div>
           <input type="file" id="pictureUpload" accept="image/*" style="display: none;">
         </div>
-        
+
         <div class="profile-info">
           <h1 class="profile-name">Your Name</h1>
           <div class="profile-contact">
             <p>youremail@gmail.com</p>
             <p>(+994) 12-345-6789</p>
           </div>
-          
+
           <div class="profile-actions">
             <button class="edit-profile-button" id="editProfileBtn">Edit Profile</button>
             <button class="logout-button">Logout</button>
           </div>
         </div>
       </div>
-      
+
       <!-- Profile Tabs -->
       <div class="profile-tabs">
         <button class="tab-button active" data-tab="reports">My Reports</button>
         <button class="tab-button" data-tab="posts">My Posts</button>
         <button class="tab-button" data-tab="comments">My Comments</button>
       </div>
-      
+
       <!-- Reports Tab Content -->
       <div id="reports" class="tab-content active">
         <div class="empty-state">
@@ -88,7 +90,7 @@
           <a href="report.html" class="primary-button">Report an Animal</a>
         </div>
       </div>
-      
+
       <!-- Posts Tab Content -->
       <div id="posts" class="tab-content">
         <div class="empty-state">
@@ -98,7 +100,7 @@
           <a href="community.html" class="primary-button">Go to Community</a>
         </div>
       </div>
-      
+
       <!-- Comments Tab Content -->
       <div id="comments" class="tab-content">
         <div class="empty-state">
@@ -110,7 +112,7 @@
       </div>
     </div>
   </main>
-  
+
   <!-- Edit Profile Modal -->
   <div class="edit-profile-modal" id="editProfileModal">
     <div class="modal-content">
@@ -118,38 +120,39 @@
         <h2 class="modal-title">Edit Profile</h2>
         <button class="close-modal" id="closeModalBtn">&times;</button>
       </div>
-      
+
       <form id="editProfileForm">
         <div class="form-group">
           <label for="fullName" class="form-label">Full Name</label>
           <input type="text" id="fullName" class="form-input" value="Sarah Johnson">
         </div>
-        
+
         <div class="form-group">
           <label for="email" class="form-label">Email</label>
           <input type="email" id="email" class="form-input" value="sarah.johnson@example.com">
         </div>
-        
+
         <div class="form-group">
           <label for="phone" class="form-label">Phone</label>
           <input type="tel" id="phone" class="form-input" value="(555) 123-4567">
         </div>
-        
+
         <div class="form-group">
           <label for="currentPassword" class="form-label">Current Password</label>
-          <input type="password" id="currentPassword" class="form-input" placeholder="Enter current password to confirm changes">
+          <input type="password" id="currentPassword" class="form-input"
+            placeholder="Enter current password to confirm changes">
         </div>
-        
+
         <div class="form-group">
           <label for="newPassword" class="form-label">New Password (leave blank to keep current)</label>
           <input type="password" id="newPassword" class="form-input" placeholder="Enter new password">
         </div>
-        
+
         <div class="form-group">
           <label for="confirmPassword" class="form-label">Confirm New Password</label>
           <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm new password">
         </div>
-        
+
         <div class="modal-footer">
           <button type="button" class="cancel-button" id="cancelEditBtn">Cancel</button>
           <button type="submit" class="save-button">Save Changes</button>
@@ -168,7 +171,7 @@
             <span class="footer-logo-text">PawRescue</span>
           </div>
         </div>
-        
+
         <div class="footer-links">
           <div class="footer-column">
             <h4 class="footer-heading">Navigation</h4>
@@ -198,7 +201,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="footer-bottom">
       <div class="container">
         <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
@@ -215,6 +218,28 @@
     <i class="fas fa-arrow-up"></i>
   </div>
 
+  <!-- chat -->
+
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-container">
+      <div class="chat-top-bar">
+        <h4>Chat with AI</h4> <!-- Updated text -->
+        <button class="close-chat">✖</button>
+      </div>
+      <div class="chat-box"></div>
+      <div class="input-container">
+        <textarea class="input-field" placeholder="Ask me something..."></textarea>
+        <div class="send-button">
+          <p>Send</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="ai-chat-button" title="Chat with AI">💬</button>
+
+  <script src="./js/chat.js"></script>
+
   <script src="./js/profile.js"></script>
 </body>
+
 </html>

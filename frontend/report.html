@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="icon" type="image/png" href="./assets/images/ico.svg">
 </head>
+
 <body>
   <!-- Navbar -->
   <nav class="navbar">
@@ -17,11 +19,11 @@
         <i class="fas fa-paw logo-icon"></i>
         <span class="logo-text">PawRescue</span>
       </a>
-      
+
       <button class="mobile-menu-button" id="menuToggle">
         <i class="fas fa-bars"></i>
       </button>
-      
+
       <div class="nav-links">
         <a href="index.html" class="nav-link">Home</a>
         <a href="report.html" class="nav-link active">Report Animal</a>
@@ -32,7 +34,7 @@
         <a href="signup.html" class="nav-link">Sign Up</a>
         <a href="profile.html" class="nav-link">Profile</a>
       </div>
-      
+
       <div class="mobile-menu" id="mobileMenu">
         <a href="index.html" class="mobile-nav-link">Home</a>
         <a href="report.html" class="mobile-nav-link active">Report Animal</a>
@@ -56,7 +58,7 @@
         <!-- Reporter Information Section -->
         <div class="form-section">
           <h2 class="form-section-title">Your Information</h2>
-          
+
           <div class="form-row">
             <div class="form-group">
               <label for="name" class="required-field">Name</label>
@@ -72,7 +74,7 @@
         <!-- Animal Information Section -->
         <div class="form-section">
           <h2 class="form-section-title">Animal Information</h2>
-          
+
           <div class="form-row">
             <div class="form-group">
               <label for="animalType" class="required-field">Type of Animal</label>
@@ -135,14 +137,14 @@
 
           <div class="form-group">
             <label for="injuries">Visible Injuries or Illness</label>
-            <textarea id="injuries" placeholder="Describe any visible injuries, limping, bleeding, etc."></textarea>
+            <textarea class="the-textarea" id="injuries" placeholder="Describe any visible injuries, limping, bleeding, etc."></textarea>
           </div>
         </div>
 
         <!-- Location and Time Section -->
         <div class="form-section">
           <h2 class="form-section-title">Location & Time</h2>
-          
+
           <div class="form-row">
             <div class="form-group">
               <label for="location" class="required-field">Location Found</label>
@@ -163,16 +165,16 @@
         <!-- Additional Information Section - MOVED ABOVE PHOTO UPLOAD -->
         <div class="form-section">
           <h2 class="form-section-title">Additional Information</h2>
-          
+
           <div class="form-group">
-            <textarea id="notes" placeholder="Any additional information that might help"></textarea>
+            <textarea class="the-textarea" id="notes" placeholder="Any additional information that might help"></textarea>
           </div>
         </div>
 
         <!-- Photo Upload Section -->
         <div class="form-section">
           <h2 class="form-section-title">Photo Upload</h2>
-          
+
           <div class="form-group">
             <label for="photo">Photo (helps rescuers assess the situation)</label>
             <div id="uploadArea" class="upload-area">
@@ -210,7 +212,7 @@
             <span class="footer-logo-text">PawRescue</span>
           </div>
         </div>
-        
+
         <div class="footer-links">
           <div class="footer-column">
             <h4 class="footer-heading">Navigation</h4>
@@ -240,7 +242,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="footer-bottom">
       <div class="container">
         <p>&copy; <span id="currentYear"></span> PawRescue. All rights reserved.</p>
@@ -252,11 +254,33 @@
     </div>
   </footer>
 
-<!-- Back to Top Button -->
-<div class="back-to-top" id="backToTop">
-  <i class="fas fa-arrow-up"></i>
-</div>
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- chat -->
+
+  <div id="chat-overlay" class="chat-overlay">
+    <div class="chat-container">
+      <div class="chat-top-bar">
+        <h4>Chat with AI</h4> <!-- Updated text -->
+        <button class="close-chat">✖</button>
+      </div>
+      <div class="chat-box"></div>
+      <div class="input-container">
+        <textarea class="input-field" placeholder="Ask me something..."></textarea>
+        <div class="send-button">
+          <p>Send</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button id="ai-chat-button" title="Chat with AI">💬</button>
+
+  <script src="./js/chat.js"></script>
 
   <script src="./js/report.js"> </script>
 </body>
+
 </html>

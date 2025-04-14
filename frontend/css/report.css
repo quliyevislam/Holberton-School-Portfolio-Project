@@ -31,9 +31,10 @@ textarea {
     font-size: 14px;
 }
 
-textarea {
+.the-textarea {
     resize: vertical;
     min-height: 100px;
+    max-height: 200px; /* Added to limit the height */
 }
 
 .upload-area {
